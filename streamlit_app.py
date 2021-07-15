@@ -13,7 +13,7 @@ färger = ['darkred', 'red', 'darkgreen', 'green', 'deepskyblue', 'blue', 'darkb
 
 close_to_cut_off = st.checkbox("Visa endast partier som ligger nära spärren", value=True)
 visa_sista_måndaerna = st.checkbox("Visa bara sista måndaderna", value=True)
-Visa_snitt = st.checkbox("visa snittvärden", value=True)
+visa_snitt = st.checkbox("Visa snittvärden", value=True)
 
 df = pd.read_csv("polls_edit.csv", delimiter=';')
 df['Datum'] = pd.to_datetime(df.PublYearMonth)
