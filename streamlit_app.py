@@ -9,9 +9,10 @@ import streamlit as st
 # ha fast 3 månad minus, sista kvartalet.
 # under 6% någon av de sista 4 mätningarna
 """
-# Test av Streamlit!
+Hur går det för de små partierna?
 Interaktiv graf för opinionsundersökningar
 """
+
 
 partier = ['V', 'S', 'MP','C', 'L', 'M', 'KD', 'SD']
 färger = ['darkred', 'red', 'darkgreen', 'green', 'deepskyblue', 'blue', 'darkblue', 'yellow']
