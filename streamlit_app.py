@@ -2,7 +2,12 @@ import altair as alt
 from altair.vegalite.v4.api import Chart
 import pandas as pd
 import streamlit as st
-
+# ny rubrik
+# lägg pren så att det märks när polls-fils ändras.
+# lägg legend under så att den synns.
+# lägg någon checkbox under?
+# ha fast 3 månad minus, sista kvartalet.
+# under 6% någon av de sista 4 mätningarna
 """
 # Test av Streamlit!
 Interaktiv graf för opinionsundersökningar
@@ -42,7 +47,17 @@ st.altair_chart(
 
         color = alt.Color('parti:N', 
             scale=alt.Scale(domain = partier, 
-            range=färger)),
+            range=färger), legend=alt.Legend(orient='bottom')),
         tooltip = ['parti:N', uttryck]
     ).interactive()
 )
+
+
+# chart.encode(
+#     #...
+#     color=alt.Color('value', legend=alt.Legend(orient='right'))
+#     #...
+# )
+
+
+
