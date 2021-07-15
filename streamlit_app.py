@@ -3,6 +3,7 @@ from altair.vegalite.v4.api import Chart
 import pandas as pd
 import streamlit as st
 # ny rubrik
+# läsbarhet på telefon, se över typsnitt.
 # lägg pren så att det märks när polls-fils ändras.
 # lägg legend under så att den synns.
 # lägg någon checkbox under?
@@ -18,7 +19,7 @@ partier = ['V', 'S', 'MP','C', 'L', 'M', 'KD', 'SD']
 färger = ['darkred', 'red', 'darkgreen', 'green', 'deepskyblue', 'blue', 'darkblue', 'yellow']
 
 close_to_cut_off = st.checkbox("Visa endast partier som ligger nära spärren", value=True)
-visa_sista_måndaerna = st.checkbox("Visa bara sista måndaderna", value=True)
+visa_sista_måndaerna = True # st.checkbox("Visa bara sista måndaderna", value=True)
 visa_snitt = st.checkbox("Visa snittvärden", value=True)
 
 df = pd.read_csv("polls_edit.csv", delimiter=';')
