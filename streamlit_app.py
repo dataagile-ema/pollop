@@ -9,9 +9,6 @@ Interaktiv graf för opinionsundersökningar
 """
 
 df = pd.read_csv("polls_edit.csv", delimiter=';')
-
-import locale
-locale.setlocale(locale.LC_ALL, 'sv_SE')
 df['Datum'] = pd.to_datetime(df.PublYearMonth)
 
 
