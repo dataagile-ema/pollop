@@ -60,7 +60,7 @@ st.altair_chart(
         symbolStrokeWidth = 8
 
     ).properties(
-        width=380,
+        width=420,
         height=340,
 
     ).configure_axis(
