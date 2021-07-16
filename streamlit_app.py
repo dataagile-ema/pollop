@@ -10,15 +10,14 @@ import streamlit as st
 # ha fast 3 månad minus, sista kvartalet.
 # under 6% någon av de sista 4 mätningarna
 """
-Hur går det för de små partierna?
-Interaktiv graf för opinionsundersökningar
+# Hur går det för de små partierna?
 """
 
 
 partier = ['V', 'S', 'MP','C', 'L', 'M', 'KD', 'SD']
 färger = ['darkred', 'red', 'darkgreen', 'green', 'deepskyblue', 'blue', 'darkblue', 'yellow']
 
-close_to_cut_off = st.checkbox("Visa endast partier som ligger nära spärren", value=True)
+close_to_cut_off = True # st.checkbox("Visa endast partier som ligger nära spärren", value=True)
 visa_sista_måndaerna = True # st.checkbox("Visa bara sista måndaderna", value=True)
 visa_snitt = st.checkbox("Visa snittvärden", value=True)
 
@@ -42,16 +41,32 @@ else:
 st.altair_chart(
     alt.Chart(df).mark_line().transform_fold(
         fold=partier, 
-        as_=['parti', 'stöd']
+        as_=['Parti', 'stöd']
     ).encode(
         x='Datum',
         y = alt.Y(uttryck, title="Procent"),
-
-        color = alt.Color('parti:N', 
+        color = alt.Color('Parti:N', 
             scale=alt.Scale(domain = partier, 
-            range=färger), legend=alt.Legend(orient='bottom')),
-        tooltip = ['parti:N', uttryck]
-    ).interactive()
+            range=färger), legend=alt.Legend(orient='top')),
+        tooltip = ['Parti:N', uttryck]
+    ).configure_legend(
+        strokeColor='gray',
+        fillColor='#EEEEEE',
+        padding=10,
+        cornerRadius=10,
+        orient='top-right',
+        title = None,
+        labelFontSize = 14,
+        symbolStrokeWidth = 8
+
+    ).properties(
+        width=420,
+        height=340,
+
+    ).configure_axis(
+        labelFontSize=20,
+        titleFontSize=20
+    )   
 )
 
 
