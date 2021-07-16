@@ -89,13 +89,8 @@ st.altair_chart(
     )   
 )
 
-st.write("Avmarkera snittvärden och välj enskilda punkter för att se vilket opinionsinstitut som utfört undersökningen. Sammanställning av värden kommer från https://val.digital/ öppna github-repo")
+st.write("Avmarkera snittvärden och välj enskilda punkter för att se vilket opinionsinstitut som utfört undersökningen. All statistik kan hittas på https://val.digital/")
 
-# chart.encode(
-#     #...
-#     color=alt.Color('value', legend=alt.Legend(orient='right'))
-#     #...
-# )
 
 
 
