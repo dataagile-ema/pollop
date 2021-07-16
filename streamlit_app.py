@@ -2,19 +2,21 @@ import altair as alt
 from altair.vegalite.v4.api import Chart
 import pandas as pd
 import streamlit as st
+from PIL import Image
 
+im = Image.open("favicon.ico")
+st.set_page_config(
+    page_title="Små partier",
+    page_icon=im,
+    layout="wide",
+)
 
-
+# skapa nytt github och ansök till share på nytt.
+# byt namn på app
+# ikon för app
+# gridd borde vara align månad när månadsvärden visas.
 # bredd i mobil visar inte allt, men kanske ok?
-# när inte snitt visas, borde vara prickar istället med opinionsinstitut som tooltip
 # lägg pren så att det märks när polls-fil ändras.
-# ha fast 3 månad minus, sista kvartalet.
-# under 6% någon av de sista 4 mätningarna
-# ny rubrik
-# läsbarhet på telefon, se över typsnitt.
-# lägg pren så att det märks när polls-fils ändras.
-# lägg legend under så att den synns.
-# lägg någon checkbox under?
 # ha fast 3 månad minus, sista kvartalet.
 # under 6% någon av de sista 4 mätningarna
 """
@@ -32,6 +34,7 @@ visa_snitt = st.checkbox("Visa snittvärden", value=True)
 df = pd.read_csv("polls_edit.csv", delimiter=';')
 df['Publiceringsmånad'] = pd.to_datetime(df.PublYearMonth)
 df['Publiceringsdatum'] = pd.to_datetime(df.PublDate)
+df.rename(columns={'Company': 'Institut'}, inplace=True)
 
 if close_to_cut_off:
     valda = df.head(1)[partier]<6.15
@@ -48,13 +51,14 @@ if visa_snitt:
     chart_a = alt.Chart(df).mark_line().transform_fold(
     fold=partier, 
     as_=['Parti', 'stöd'])
+    tool_t = ['Parti:N', uttryck]
 else:
     uttryck = 'stöd:Q'
     datum_str = 'Publiceringsdatum'
     chart_a = alt.Chart(df).mark_circle().transform_fold(
     fold=partier, 
     as_=['Parti', 'stöd'])
-
+    tool_t = ['Parti:N', uttryck, 'Institut']
 
 
 st.altair_chart(
@@ -65,7 +69,7 @@ st.altair_chart(
         color = alt.Color('Parti:N', 
             scale=alt.Scale(domain = partier, 
             range=färger), legend=alt.Legend(orient='top')),
-        tooltip = ['Parti:N', uttryck]
+        tooltip = tool_t
     ).configure_legend(
         strokeColor='gray',
         fillColor='#EEEEEE',
@@ -86,6 +90,7 @@ st.altair_chart(
     )   
 )
 
+st.write("Avmarkera snittvärden och välj enskilda punkter för att se vilket opinionsinstitut som utfört undersökningen. https://val.digital/ rekommenderas för att se data i sin helhet")
 
 # chart.encode(
 #     #...
