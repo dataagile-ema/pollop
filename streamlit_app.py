@@ -45,15 +45,21 @@ if visa_sista_måndaerna:
 if visa_snitt:
     uttryck = 'mean(stöd):Q'
     datum_str = 'Publiceringsmånad'
+    chart_a = alt.Chart(df).mark_line().transform_fold(
+    fold=partier, 
+    as_=['Parti', 'stöd'])
 else:
     uttryck = 'stöd:Q'
     datum_str = 'Publiceringsdatum'
+    chart_a = alt.Chart(df).mark_circle().transform_fold(
+    fold=partier, 
+    as_=['Parti', 'stöd'])
+
+
 
 st.altair_chart(
-    alt.Chart(df).mark_line().transform_fold(
-        fold=partier, 
-        as_=['Parti', 'stöd']
-    ).encode(
+
+    chart_a.encode(
         x=datum_str,
         y = alt.Y(uttryck, title="Procent"),
         color = alt.Color('Parti:N', 
