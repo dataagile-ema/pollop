@@ -31,6 +31,7 @@ visa_snitt = st.checkbox("Visa snittvärden", value=True)
 
 df = pd.read_csv("polls_edit.csv", delimiter=';')
 df['Datum'] = pd.to_datetime(df.PublYearMonth)
+df['Publiceringsdatum'] = pd.to_datetime(df.PublDate)
 
 if close_to_cut_off:
     valda = df.head(1)[partier]<6.15
@@ -43,15 +44,17 @@ if visa_sista_måndaerna:
 
 if visa_snitt:
     uttryck = 'mean(stöd):Q'
+    datum_str = 'Datum'
 else:
     uttryck = 'stöd:Q'
+    datum_str = 'Publiceringsdatum'
 
 st.altair_chart(
     alt.Chart(df).mark_line().transform_fold(
         fold=partier, 
         as_=['Parti', 'stöd']
     ).encode(
-        x='Datum',
+        x=datum_str,
         y = alt.Y(uttryck, title="Procent"),
         color = alt.Color('Parti:N', 
             scale=alt.Scale(domain = partier, 
