@@ -2,6 +2,14 @@ import altair as alt
 from altair.vegalite.v4.api import Chart
 import pandas as pd
 import streamlit as st
+
+
+
+# bredd i mobil visar inte allt, men kanske ok?
+# när inte snitt visas, borde vara prickar istället med opinionsinstitut som tooltip
+# lägg pren så att det märks när polls-fil ändras.
+# ha fast 3 månad minus, sista kvartalet.
+# under 6% någon av de sista 4 mätningarna
 # ny rubrik
 # läsbarhet på telefon, se över typsnitt.
 # lägg pren så att det märks när polls-fils ändras.
