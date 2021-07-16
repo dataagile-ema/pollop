@@ -7,8 +7,7 @@ from PIL import Image
 im = Image.open("favicon.ico")
 st.set_page_config(
     page_title="Små partier",
-    page_icon=im,
-    layout="wide",
+    page_icon=im
 )
 
 # skapa nytt github och ansök till share på nytt.
@@ -90,7 +89,7 @@ st.altair_chart(
     )   
 )
 
-st.write("Avmarkera snittvärden och välj enskilda punkter för att se vilket opinionsinstitut som utfört undersökningen. https://val.digital/ rekommenderas för att se data i sin helhet")
+st.write("Avmarkera snittvärden och välj enskilda punkter för att se vilket opinionsinstitut som utfört undersökningen. Sammanställning av värden kommer från https://val.digital/ öppna github-repo")
 
 # chart.encode(
 #     #...
