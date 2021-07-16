@@ -30,7 +30,7 @@ visa_sista_måndaerna = True # st.checkbox("Visa bara sista måndaderna", value=
 visa_snitt = st.checkbox("Visa snittvärden", value=True)
 
 df = pd.read_csv("polls_edit.csv", delimiter=';')
-df['Datum'] = pd.to_datetime(df.PublYearMonth)
+df['Publiceringsmånad'] = pd.to_datetime(df.PublYearMonth)
 df['Publiceringsdatum'] = pd.to_datetime(df.PublDate)
 
 if close_to_cut_off:
@@ -40,11 +40,11 @@ if close_to_cut_off:
     färger = list(compress(färger, valda.to_numpy().tolist()[0]))
 
 if visa_sista_måndaerna:
-    df = df[df['Datum'] > '2021-04-01']
+    df = df[df['Publiceringsmånad'] > '2021-04-01']
 
 if visa_snitt:
     uttryck = 'mean(stöd):Q'
-    datum_str = 'Datum'
+    datum_str = 'Publiceringsmånad'
 else:
     uttryck = 'stöd:Q'
     datum_str = 'Publiceringsdatum'
