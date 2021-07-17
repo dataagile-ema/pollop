@@ -6,7 +6,7 @@ from PIL import Image
 
 im = Image.open("favicon.ico")
 st.set_page_config(
-    page_title="Små partier",
+    page_title="Pollop",
     page_icon=im
 )
 
