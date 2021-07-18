@@ -149,7 +149,7 @@ st.set_page_config(
 """
 
 # grunddata navigering
-användar_val = ['småpartierna', 'större partierna', 'blocken']
+användar_val = ['småpartier', 'större partier', 'block']
 
 
 # navigering
