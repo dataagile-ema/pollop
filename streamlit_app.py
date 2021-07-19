@@ -183,7 +183,7 @@ if ((__vilket_val() == 0) or (__vilket_val() == 1)):
     chart_u = OpinionChart.skapa_tidsserie_chart(df, (__vilket_val() == 0), visa_månadsgenomsnitt)
 else:
     chart_u = OpinionChart.skapa_block_chart()
-    st.write("Partierna under riksdagsspärren räknas inte med.")
+    st.write("Partier under riksdagsspärren räknas inte med.")
     
 
 st.altair_chart(
