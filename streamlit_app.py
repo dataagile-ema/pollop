@@ -163,6 +163,7 @@ st.set_page_config(
 # Hur går det för..
 """
 
+
 # grunddata navigering
 användar_val = ['de små partierna', 'de större partierna', 'de två blocken']
 
@@ -189,6 +190,13 @@ else:
 st.altair_chart(
     chart_u
 )
+
+
+idag = pd.to_datetime('today')
+valdag = pd.to_datetime('2022-09-11')
+antal_dagar_till_valet = (valdag-idag).days+1
+st.write(f"Dagar till valet: {antal_dagar_till_valet}")
+
 
 with st.beta_expander("Data referenser"):
      st.write("""
