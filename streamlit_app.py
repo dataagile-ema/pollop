@@ -58,7 +58,7 @@ class OpinionChart:
                 text=alt.Text('sum(stöd)', format='.1f')
             )
 
-        return OpinionChart.lägg_till_konfiguration_för_legend_properties_och_axlar(chart + text, 15)
+        return OpinionChart.lägg_till_konfiguration_för_legend_properties_och_axlar(chart + text, 14)
 
 
     @staticmethod
@@ -92,7 +92,7 @@ class OpinionChart:
         return OpinionChart.lägg_till_konfiguration_för_legend_properties_och_axlar(chart_och_linje)
 
     @staticmethod
-    def lägg_till_konfiguration_för_legend_properties_och_axlar(chart_uttryck, setlabelFontSize:int = 20):
+    def lägg_till_konfiguration_för_legend_properties_och_axlar(chart_uttryck, setlabelFontSize:int = 14):
         chart_uttryck = chart_uttryck.configure_legend(
                     strokeColor='gray',
                     fillColor='#EEEEEE',
@@ -106,8 +106,11 @@ class OpinionChart:
                             height=340).configure_axis(
                             labelFontSize=setlabelFontSize,
                             labelAngle = 0,
-                            titleFontSize=20
-                    )
+                            titleFontSize=14
+                    ).configure_title(
+                            fontSize=14
+                        )
+
         return chart_uttryck
 
     
@@ -116,7 +119,7 @@ class OpinionChart:
         if chart is None:
             Exception("fel!")
         chart = chart.encode(
-        x = datum_utttryck,
+        x = alt.X(datum_utttryck, title = "Månad"),
         y = alt.Y(y_uttryck, title = "Procent"),
         color = alt.Color('Parti:N',
             scale=alt.Scale(domain = partier_urval, range=färger_urval), legend=alt.Legend(orient='top')),
