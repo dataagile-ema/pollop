@@ -6,7 +6,6 @@ import pandas as pd
 import streamlit as st
 from PIL import Image
 from itertools import compress
-import locale
 
 class GrundData:
     block = ['Regering + stöd', 'Regering + stöd', 'Regering + stöd', 'Regering + stöd', 'Högeropposition', 'Högeropposition', 'Högeropposition', 'Högeropposition']
@@ -15,22 +14,17 @@ class GrundData:
     gräns_småparti = 6.0
     riksdagsspärr = 4.0
 
-
-
 class OpinionChart:
 
 
     @staticmethod
     def läs_och_preparera_tidsserie_data(tidsserie: bool = True):
         df = pd.read_csv("polls.csv", delimiter=',')
-
         if tidsserie == False:
             return df
         df['Publiceringsdatum'] = pd.to_datetime(df.PublDate)
         df.rename(columns={'Company': 'Institut'}, inplace=True)
         df = df[df['Publiceringsdatum'] > '2021-02-01']
-        locale.setlocale(locale.LC_ALL, 'sv_SE')
-        df['Publmånad_kortnamn'] = df['Publiceringsdatum'].dt.strftime('%b')
         return df
 
 
@@ -81,7 +75,7 @@ class OpinionChart:
         färger_urval = list(compress(GrundData.färger, parti_urval_bool.to_numpy().tolist()[0]))
         if genomsnitt_bool:
             y_uttryck = 'mean(stöd):Q'
-            datum_utttryck = 'Publmånad_kortnamn'
+            datum_utttryck = 'month(Publiceringsdatum)'
             chart = alt.Chart(df_tidsserie, title=titel).mark_line().transform_fold(
                         fold=partier_urval, as_=['Parti', 'stöd'])
             tool_uttryck = ['Parti:N', y_uttryck]
@@ -90,7 +84,7 @@ class OpinionChart:
             datum_utttryck = 'Publiceringsdatum'
             chart = alt.Chart(df_tidsserie, title=titel).mark_circle().transform_fold(
                         fold=partier_urval, as_=['Parti', 'stöd'])
-            tool_uttryck = ['Parti:N', y_uttryck, 'Institut', 'Publiceringsdatum']
+            tool_uttryck = ['Parti:N', y_uttryck, 'Institut']
 
         chart = OpinionChart.lägg_till_encoding_för_chart(chart, datum_utttryck, y_uttryck, partier_urval, färger_urval, tool_uttryck)
         chart_och_linje = OpinionChart.villkorligt_lägg_till_linje_för_spärr(små_partier_bool, chart)
@@ -122,12 +116,10 @@ class OpinionChart:
     
     @staticmethod
     def lägg_till_encoding_för_chart(chart, datum_utttryck, y_uttryck, partier_urval, färger_urval, tool_uttryck):
-        mm_o = ['jan', 'feb', 'mar', 'apr', 'maj' , 'jun','jul' ,'aug' , 'sep','okt' ,'nov' 'dec']
-        
         if chart is None:
             Exception("fel!")
         chart = chart.encode(
-        x = alt.X(datum_utttryck, title = "Månad", sort=mm_o),
+        x = alt.X(datum_utttryck, title = "Månad"),
         y = alt.Y(y_uttryck, title = "Procent"),
         color = alt.Color('Parti:N',
             scale=alt.Scale(domain = partier_urval, range=färger_urval), legend=alt.Legend(orient='top')),
