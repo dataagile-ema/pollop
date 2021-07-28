@@ -84,7 +84,7 @@ class OpinionChart:
             datum_utttryck = 'Publiceringsdatum'
             chart = alt.Chart(df_tidsserie, title=titel).mark_circle().transform_fold(
                         fold=partier_urval, as_=['Parti', 'stöd'])
-            tool_uttryck = ['Parti:N', y_uttryck, 'Institut']
+            tool_uttryck = ['Parti:N', y_uttryck, 'Institut', 'Publiceringsdatum']
 
         chart = OpinionChart.lägg_till_encoding_för_chart(chart, datum_utttryck, y_uttryck, partier_urval, färger_urval, tool_uttryck)
         chart_och_linje = OpinionChart.villkorligt_lägg_till_linje_för_spärr(små_partier_bool, chart)
