@@ -4,7 +4,7 @@ from abc import ABC, abstractmethod
 from types_def import Urval
 
 # tranformationer som återanvänds
-def add_tranform_fold_wide_to_long_by_party(c: alt.Chart, partier_urval: list[str]):
+def add_tranform_fold_wide_to_long_by_party(c: alt.Chart, partier_urval):
     c = c.transform_fold(fold=partier_urval, as_=["Parti", "stöd"])
     return c
 
