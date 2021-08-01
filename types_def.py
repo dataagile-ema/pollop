@@ -1,6 +1,4 @@
-
-from dataclasses import dataclass, field
-@dataclass
 class Urval:
-    färger_partier_urval: list[str] = field(default_factory=list)
-    partier_urval: list[str] = field(default_factory=list)
+    def __init__(self, färger_partier_urval, partier_urval) -> None:
+        self.färger_partier_urval = färger_partier_urval
+        self.partier_urval = partier_urval
