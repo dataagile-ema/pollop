@@ -16,14 +16,14 @@ def add_transform_lookup_for_block(c: alt.Chart, lookup_block: pd.DataFrame):
     return c
 
 
-class ChartBase(object):
+class ChartBase(ABC):
     def __init__(
         self,
         data: pd.DataFrame,
         title: str = "",
         subtitle: list[str] = [""],
         urval: Urval = None,
-        lookup_block = [""],
+        lookup_block: pd.DataFrame = None,
     ):
         plot_title = alt.TitleParams(title, subtitle=subtitle)
         self.c: alt.Chart = alt.Chart(data=data, title=plot_title)
