@@ -23,7 +23,7 @@ class ChartBase(ABC):
         title: str = "",
         subtitle: list[str] = [""],
         urval: Urval = None,
-        lookup_block: pd.DataFrame = pd.DataFrame(),
+        lookup_block: pd.DataFrame = pd.DataFrame(['']),
     ):
         plot_title = alt.TitleParams(title, subtitle=subtitle)
         self.c: alt.Chart = alt.Chart(data=data, title=plot_title)
