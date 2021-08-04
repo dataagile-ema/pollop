@@ -8,6 +8,7 @@ def add_tranform_fold_wide_to_long_by_party(c: alt.Chart, partier_urval):
     c = c.transform_fold(fold=partier_urval, as_=["Parti", "stöd"])
     return c
 
+
 def add_transform_lookup_for_block(c: alt.Chart, lookup_block: pd.DataFrame):
     c = c.transform_lookup(
         lookup="Parti",
@@ -21,7 +22,7 @@ class ChartBase(ABC):
         self,
         data: pd.DataFrame,
         title: str = "",
-        subtitle: list[str] = [""],
+        subtitle = [""],
         urval: Urval = None,
         lookup_block: pd.DataFrame = None,
     ):
