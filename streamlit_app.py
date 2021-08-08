@@ -1,6 +1,8 @@
 import streamlit as st
 from PIL import Image
 from itertools import compress
+
+from streamlit.caching import cache
 import model_chart
 
 # navigering
@@ -27,7 +29,7 @@ def __vilket_val():
         return 2
 
 
-modell = model_chart.ModelChart()
+
 
 # sida
 im = Image.open("favicon.ico")
@@ -35,7 +37,10 @@ st.set_page_config(page_title="Pollop", page_icon=im)
 """
 # Hur går det för..
 """
-
+@st.cache(persist=True)
+def get_model():
+    return model_chart.ModelChart()
+modell = get_model()
 
 # grunddata navigering
 användar_val = ["de små partierna", "de större partierna", "de två blocken"]
@@ -67,14 +72,31 @@ if visa_månadsgenomsnitt:
     elif __vilket_val() == 1:
         chart_u = modell.visa_linje_större_partier()
     else:
-        chart_u = modell.visa_block_som_stacked_bar_30_dagars_medel()
+        visa_block_linje = st.checkbox(
+            "Visa tidsserie för block",
+            value=False,
+            help="Visa medelvärden per datum för block ",
+        )
+        if visa_block_linje:
+            chart_u = modell.visa_linje_för_block()
+        else:
+            chart_u = modell.visa_block_som_stacked_bar_30_dagars_medel()
+
 else:
     if __vilket_val() == 0:
         chart_u = modell.visa_spridningsdiagram_små_partier()
     elif __vilket_val() == 1:
         chart_u = modell.visa_spridningsdiagram_större_partier()
     else:
-        chart_u = modell.visa_block_som_stacked_bar_30_senaste_undesökning()
+        visa_block_linje = st.checkbox(
+            "Visa tidsserie för block",
+            value=False,
+            help="Visa medelvärden per datum för block ",
+        )
+        if visa_block_linje:
+            chart_u = modell.visa_linje_för_block()
+        else:
+            chart_u = modell.visa_block_som_stacked_bar_senaste_undesökning()
 
 
 st.altair_chart(chart_u)

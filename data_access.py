@@ -61,7 +61,7 @@ class DataAccess:
     ]
 
     gräns_småparti = 6.0
-    riksdagsspärr = 4.0
+
 
 
     @staticmethod
@@ -100,7 +100,7 @@ class DataAccess:
         return series
 
     @staticmethod
-    def hämta_urval(df: pd.DataFrame, över_gräns: bool, gräns: double):
+    def hämta_urval_enligt_30_dagars_medel(df: pd.DataFrame, över_gräns: bool, gräns: double):
         """ Returnerar filtrerad tidsserie, partier och färger baserat på om de är över gräns för småparti """
 
         serie = DataAccess.hämta_medelvärde_senaste_30_dagarna(df)
@@ -115,6 +115,11 @@ class DataAccess:
             compress(DataAccess.färger_partier, parti_urval_bool)
         )
         up = Urval(färger_partier_urval, partier_urval)
+        return up
+
+    @staticmethod
+    def hämta_urval_alla_partier():
+        up = Urval(DataAccess.färger_partier, DataAccess.partier)
         return up
 
     @staticmethod
