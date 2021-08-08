@@ -1,7 +1,7 @@
 import streamlit as st
 from PIL import Image
 from itertools import compress
-
+import copy
 from streamlit.caching import cache
 import model_chart
 
@@ -40,7 +40,8 @@ st.set_page_config(page_title="Pollop", page_icon=im)
 @st.cache()
 def get_model():
     return model_chart.ModelChart()
-modell = get_model()
+m = get_model()
+modell = copy.deepcopy(m)
 
 # grunddata navigering
 användar_val = ["de små partierna", "de större partierna", "de två blocken"]
