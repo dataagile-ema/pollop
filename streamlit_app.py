@@ -37,7 +37,7 @@ st.set_page_config(page_title="Pollop", page_icon=im)
 """
 # Hur går det för..
 """
-@st.cache(persist=True)
+@st.cache()
 def get_model():
     return model_chart.ModelChart()
 modell = get_model()
