@@ -1,7 +1,7 @@
 import streamlit as st
 from PIL import Image
 from itertools import compress
-import copy
+
 from streamlit.caching import cache
 import model_chart
 
@@ -29,19 +29,16 @@ def __vilket_val():
         return 2
 
 
-
-
 # sida
 im = Image.open("favicon.ico")
 st.set_page_config(page_title="Pollop", page_icon=im)
 """
 # Hur går det för..
 """
-@st.cache()
+@st.cache(persist=True)
 def get_model():
     return model_chart.ModelChart()
-m = get_model()
-modell = copy.deepcopy(m)
+modell = get_model()
 
 # grunddata navigering
 användar_val = ["de små partierna", "de större partierna", "de två blocken"]
