@@ -52,9 +52,6 @@ class ChartByBlockAddText(ChartByBlockBase):
     def add_transform_aggregate(self):
         self.c = self.c.transform_aggregate(medel_stöd="mean(stöd)", groupby=["Parti"])
 
-    def add_transform_aggregate(self):
-        self.c = self.c.transform_aggregate(medel_stöd="mean(stöd)", groupby=["Parti"])
-
     def add_marker(self):
         self.c = self.c.mark_text(dx=0, baseline="middle", dy=-8, color="darkslategrey")
 
@@ -68,7 +65,7 @@ class ChartByBlockAddText(ChartByBlockBase):
 
 class ChartByBlockDateTimeSeries(ChartByBlockBase):
     def add_marker(self):
-        self.c = self.c.mark_line()
+        self.c = self.c.mark_circle()
     
     def add_transform_aggregate(self):
         self.c = self.c.transform_aggregate(medel_stöd="mean(stöd)", groupby=["Publiceringsdatum", "Parti"])
