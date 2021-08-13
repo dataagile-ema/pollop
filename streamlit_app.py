@@ -44,7 +44,7 @@ modell = get_model()
 användar_val = ["de små partierna", "de större partierna", "de två blocken"]
 
 # navigering
-left, mid, right = st.beta_columns(3)
+left, mid, right = st.columns(3)
 with left:
     #st.button(
     st.button(label=användar_val[0], on_click=__sätt_val_0, help="Ligger nära riksdagsspärren i undersökningarna")
@@ -103,7 +103,7 @@ st.altair_chart(chart_u)
 st.write(modell.ge_meddelande_om_dagar_kvar_till_valet())
 
 
-with st.beta_expander("Data referenser"):
+with st.expander("Data referenser"):
     st.write(
         """
          Avmarkera snittvärden och välj enskilda punkter för att se vilket opinionsinstitut som utfört undersökningen.
