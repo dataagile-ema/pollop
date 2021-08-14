@@ -78,8 +78,8 @@ class DataAccess:
         df["Publiceringsdatum"] = pd.to_datetime(df["Publiceringsdatum"])
         if start_datum is not None:
             df = df[df["Publiceringsdatum"] > start_datum]
-        df.set_index('Publiceringsdatum')
-        df.sort_index(inplace=True, ascending=False)
+        #df.set_index('Publiceringsdatum')
+        #df.sort_index(inplace=True, ascending=False)
 
         return df
 
