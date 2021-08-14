@@ -21,14 +21,14 @@ class DataAccess:
         "Högeropposition",
     ]
     färger_partier = [
-        "darkred",
-        "red",
-        "darkgreen",
-        "green",
-        "deepskyblue",
-        "blue",
-        "darkblue",
-        "yellow",
+        "#B00000",
+        "#ed1b34",
+        "#83CF39",
+        "#009933",
+        "#6BB7EC",
+        "#1B49DD",
+        "#231977",
+        "#dddd00",
     ]
     partier = ["V", "S", "MP", "C", "L", "M", "KD", "SD"]
     orginal_kolumner = [
@@ -78,6 +78,9 @@ class DataAccess:
         df["Publiceringsdatum"] = pd.to_datetime(df["Publiceringsdatum"])
         if start_datum is not None:
             df = df[df["Publiceringsdatum"] > start_datum]
+        df.set_index('Publiceringsdatum')
+        df.sort_index(inplace=True, ascending=False)
+
         return df
 
     @staticmethod 
