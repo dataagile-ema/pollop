@@ -35,7 +35,7 @@ st.set_page_config(page_title="Pollop", page_icon=im)
 """
 # Hur går det för..
 """
-@st.cache(persist=True)
+@st.cache
 def get_model():
     return model_chart.ModelChart()
 modell = get_model()
@@ -111,4 +111,5 @@ with st.expander("Data referenser"):
          Appen använder val.digitals publika repo där opinionssiffror finns samlade: https://github.com/hampusborgos/SwedishPolls/tree/master/Data
      """
     )
+    st.table(modell.df)
 
