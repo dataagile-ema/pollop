@@ -25,16 +25,16 @@ class AssembleCharts:
             padding=0,
             labelFontSize=14,
             symbolStrokeWidth=10,
-            symbolType = "circle"
+            symbolType = "circle",
         )
         
 
     def add_properties(self):
         self.chart_exp = self.chart_exp.properties(
-            width=250, height=380,
+            width=420, height=420,
         ).configure_axis(
             labelFontSize=self.label_font_size, labelAngle=0, titleFontSize=14
-        )
+        ).configure_view(strokeWidth=0).configure_axis(gridOpacity=0.35, labelFontSize=14, labelOpacity = 0.65, domainOpacity=0.5)
 
     def add_configure_title(self):
         self.chart_exp = self.chart_exp.configure_title(fontSize=14)

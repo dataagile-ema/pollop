@@ -91,5 +91,5 @@ class ChartByBlockDateTimeSeries(ChartByBlockBase):
 class ChartByBlockDateTimeSeriesLine(ChartByBlockDateTimeSeries):
 
     def add_marker(self):
-        self.c = self.c.mark_line(size=1.5, opacity=1)
+        self.c = self.c.mark_line(size=1.7, opacity=1)
 

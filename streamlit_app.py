@@ -80,16 +80,16 @@ df_show = modell.df.tail(2)[::-1][["Publiceringsdatum", "V", "S", "MP", "C", "L"
 df_show["Institut"] = df_show["Institut"] + df_show["Publiceringsdatum"].dt.strftime(" %m-%d")
 df_show.set_index("Institut", inplace=True)
 df_show = df_show[["V", "S", "MP", "C", "L", "M", "KD", "SD"]]
-# st.table(df_show.style.format({
-#     "V": "{:.1f}",
-#     "S": "{:.1f}",
-#     "MP": "{:.1f}",
-#     "C": "{:.1f}",
-#     "L": "{:.1f}",
-#     "M": "{:.1f}",
-#     "KD": "{:.1f}",
-#     "SD": "{:.1f}"},
-#     ))
+st.table(df_show.style.format({
+    "V": "{:.1f}",
+    "S": "{:.1f}",
+    "MP": "{:.1f}",
+    "C": "{:.1f}",
+    "L": "{:.1f}",
+    "M": "{:.1f}",
+    "KD": "{:.1f}",
+    "SD": "{:.1f}"},
+    ))
 
 
 st.write(modell.ge_meddelande_om_dagar_kvar_till_valet())

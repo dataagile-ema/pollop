@@ -13,7 +13,7 @@ class Chart4PercentLineRule(ChartBase):
         pass
 
     def add_marker(self):
-        self.c = self.c.mark_rule(strokeDash=[10, 10], color="black")
+        self.c = self.c.mark_rule(color="black", strokeWidth=1)
 
     def add_encode(self):
         self.c = self.c.encode(
