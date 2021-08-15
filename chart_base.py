@@ -57,14 +57,19 @@ class ChartBase(ABC):
     def add_tranform_fold_wide_to_long_by_party(self):
         self.c = self.c.transform_fold(fold = self.urval.partier_urval, as_=["Parti", "stöd"])
 
-    def get_alt_color_by_parti_and_urval(self, orient="top"):
+    def get_alt_color_by_parti_and_urval(self, orient="top", suppress_legend=False):
+        if suppress_legend:
+            legend_var = None
+        else:
+            legend_var = alt.Legend(orient=orient)
+
         color = alt.Color(
                     "Parti:N",
                     scale=alt.Scale(
                         domain=self.urval.partier_urval,
                         range=self.urval.färger_partier_urval,
                     ),
-                    legend=alt.Legend(orient=orient),
+                    legend=legend_var,
                 )
         return color
 

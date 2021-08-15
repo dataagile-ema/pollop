@@ -1,3 +1,6 @@
+from numpy.core.fromnumeric import size
+
+
 class AssembleCharts:
     """ Skapar ett komplett diagram utifrån ett eller flera chartobjekt """
 
@@ -16,19 +19,19 @@ class AssembleCharts:
 
     def add_configure_legend(self):
         self.chart_exp = self.chart_exp.configure_legend(
-            strokeColor="gray",
-            fillColor="#EEEEEE",
-            padding=10,
-            cornerRadius=10,
             orient="top-right",
             title=None,
+            fillColor="#fbfbfc",
+            padding=0,
             labelFontSize=14,
-            symbolStrokeWidth=8,
+            symbolStrokeWidth=10,
+            symbolType = "circle"
         )
+        
 
     def add_properties(self):
         self.chart_exp = self.chart_exp.properties(
-            width=420, height=340
+            width=420, height=500
         ).configure_axis(
             labelFontSize=self.label_font_size, labelAngle=0, titleFontSize=14
         )

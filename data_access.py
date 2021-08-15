@@ -60,6 +60,21 @@ class DataAccess:
         "Institut",
     ]
 
+    visa_kolumner = [
+        "Publiceringsdatum",
+        "V",
+        "S",
+        "MP",
+        "C",
+        "L",
+        "M",
+        "KD",
+        "SD",
+        "Insamlingsdatum_fr_o_m",
+        "Insamlingsdatum_t_o_m",
+        "Institut",
+    ]
+
     gräns_småparti = 6.0
 
 
@@ -76,12 +91,21 @@ class DataAccess:
         df = df[DataAccess.orginal_kolumner]
         df = df.rename(columns=rename_dict)
         df["Publiceringsdatum"] = pd.to_datetime(df["Publiceringsdatum"])
+        df = df.reindex(columns=DataAccess.visa_kolumner)
         if start_datum is not None:
             df = df[df["Publiceringsdatum"] > start_datum]
-        #df.set_index('Publiceringsdatum')
-        #df.sort_index(inplace=True, ascending=False)
+        df.set_index('Publiceringsdatum')
+        df.sort_index(inplace=True, ascending=False)
 
         return df
+
+    @staticmethod 
+    def skapa_rullande_df(data: pd.DataFrame, window: int):
+        df_rol = data.set_index('Publiceringsdatum')
+        df_rol = df_rol.rolling(window).mean()
+        df_rol.reset_index(inplace=True)
+        df_rol = df_rol[df_rol["Publiceringsdatum"] > '2021-02-01']
+        return df_rol
 
     @staticmethod 
     def ge_data_for_sista_30_dagarna(df: pd.DataFrame):

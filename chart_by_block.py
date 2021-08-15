@@ -65,26 +65,31 @@ class ChartByBlockAddText(ChartByBlockBase):
 
 class ChartByBlockDateTimeSeries(ChartByBlockBase):
     def add_marker(self):
-        self.c = self.c.mark_circle()
+        self.c = self.c.mark_point(opacity=0.4, size=40)
     
     def add_transform_aggregate(self):
         self.c = self.c.transform_aggregate(medel_stöd="mean(stöd)", groupby=["Publiceringsdatum", "Parti"])
 
+
     def add_encode(self):
         y_uttryck = "sum(medel_stöd):Q"
-        datum_uttryck = "Publiceringsdatum"
+        datum_uttryck = "Publiceringsdatum:T"
         self.c = self.c.encode(
             x=alt.X(datum_uttryck, title="Månad"),
-            y=alt.Y(y_uttryck, title="Procent"),
+            y=alt.Y(y_uttryck, title="Procent", scale=alt.Scale(domain=(39, 54))),
             color = alt.Color(
                     "Block:O",
                      scale=alt.Scale(
                         domain=["Regering + stöd", "Högeropposition"],
-                        range=["red", "blue"],
+                        range=["#FF8080", "#80C0FF"],
                     ),
                     legend=alt.Legend(orient='top'),
                 ),
             tooltip=[y_uttryck, "Block:O", datum_uttryck]
         )
     
+class ChartByBlockDateTimeSeriesLine(ChartByBlockDateTimeSeries):
+
+    def add_marker(self):
+        self.c = self.c.mark_line(size=1.7, opacity=1)
 

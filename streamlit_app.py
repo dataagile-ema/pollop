@@ -1,7 +1,7 @@
 import streamlit as st
 from PIL import Image
 from itertools import compress
-
+import data_access as da
 from streamlit.caching import cache
 import model_chart
 
@@ -59,45 +59,37 @@ with right:
         help="Nuvarande regeringsunderlag jämfört med högeroppositionen",
     )
 
-visa_månadsgenomsnitt = st.checkbox(
-    "Visa medelvärden",
-    value=True,
-    help="Visa medelvärden för flera undersökningar ",
-)
-if visa_månadsgenomsnitt:
+
     if __vilket_val() == 0:
-        chart_u = modell.visa_linje_små_partier()
+        chart_u1 = modell.visa_spridningsdiagram_små_partier()
+        chart_u2 = modell.visa_linje_små_partier()
     elif __vilket_val() == 1:
-        chart_u = modell.visa_linje_större_partier()
+        chart_u1 = modell.visa_spridningsdiagram_större_partier()
+        chart_u2 = modell.visa_linje_större_partier()
     else:
-        visa_block_linje = st.checkbox(
-            "Visa tidsserie för block",
-            value=False,
-            help="Visa medelvärden per datum för block ",
-        )
-        if visa_block_linje:
-            chart_u = modell.visa_linje_för_block()
-        else:
-            chart_u = modell.visa_block_som_stacked_bar_30_dagars_medel()
-
-else:
-    if __vilket_val() == 0:
-        chart_u = modell.visa_spridningsdiagram_små_partier()
-    elif __vilket_val() == 1:
-        chart_u = modell.visa_spridningsdiagram_större_partier()
-    else:
-        visa_block_linje = st.checkbox(
-            "Visa tidsserie för block",
-            value=False,
-            help="Visa medelvärden per datum för block ",
-        )
-        if visa_block_linje:
-            chart_u = modell.visa_linje_för_block()
-        else:
-            chart_u = modell.visa_block_som_stacked_bar_senaste_undesökning()
+        chart_u1 = modell.visa_linje_för_block()
+        chart_u2 = modell.visa_block_som_stacked_bar_senaste_4_undesökningar()
 
 
-st.altair_chart(chart_u)
+
+st.altair_chart(chart_u1)
+st.altair_chart(chart_u2)
+st.write("Senaste undersökningarna")
+
+df_show = modell.df.tail(2)[::-1][["Publiceringsdatum", "V", "S", "MP", "C", "L", "M", "KD", "SD", "Institut"]]
+df_show["Institut"] = df_show["Institut"] + df_show["Publiceringsdatum"].dt.strftime(" %m-%d")
+df_show.set_index("Institut", inplace=True)
+df_show = df_show[["V", "S", "MP", "C", "L", "M", "KD", "SD"]]
+st.table(df_show.style.format({
+    "V": "{:.1f}",
+    "S": "{:.1f}",
+    "MP": "{:.1f}",
+    "C": "{:.1f}",
+    "L": "{:.1f}",
+    "M": "{:.1f}",
+    "KD": "{:.1f}",
+    "SD": "{:.1f}"},
+    ))
 
 
 st.write(modell.ge_meddelande_om_dagar_kvar_till_valet())
@@ -111,5 +103,5 @@ with st.expander("Data referenser"):
          Appen använder val.digitals publika repo där opinionssiffror finns samlade: https://github.com/hampusborgos/SwedishPolls/tree/master/Data
      """
     )
-    st.table(modell.df)
+    
 
