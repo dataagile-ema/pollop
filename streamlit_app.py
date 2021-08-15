@@ -98,10 +98,11 @@ st.write(modell.ge_meddelande_om_dagar_kvar_till_valet())
 with st.expander("Data referenser"):
     st.write(
         """
-         All statistik kan hittas på https://val.digital/"
-         Appen använder val.digitals publika repo där opinionssiffror 
-         finns samlade: 
-         https://github.com/hampusborgos/SwedishPolls/tree/master/Data
+         All statistik kan hittas på 
+         https://val.digital/".
+         Appen använder val.digitals publika 
+         repo där opinionssiffror finns 
+         samlade
      """
     )
     
