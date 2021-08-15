@@ -31,7 +31,7 @@ class AssembleCharts:
 
     def add_properties(self):
         self.chart_exp = self.chart_exp.properties(
-            width=380, height=380,
+            width=250, height=380,
         ).configure_axis(
             labelFontSize=self.label_font_size, labelAngle=0, titleFontSize=14
         )
