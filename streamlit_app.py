@@ -100,9 +100,9 @@ with st.expander("Data referenser"):
         """
          All statistik kan hittas på 
          https://val.digital/".
-         Appen använder val.digitals publika 
-         repo där opinionssiffror finns 
-         samlade.
+         Den härs sidan använder 
+         val.digitals publika github repo 
+         där opinionssiffror finns samlade.
      """
     )
     
