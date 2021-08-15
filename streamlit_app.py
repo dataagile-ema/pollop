@@ -102,7 +102,7 @@ with st.expander("Data referenser"):
          https://val.digital/".
          Appen använder val.digitals publika 
          repo där opinionssiffror finns 
-         samlade
+         samlade.
      """
     )
     
