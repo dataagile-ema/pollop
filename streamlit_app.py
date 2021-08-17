@@ -76,7 +76,7 @@ st.altair_chart(chart_u1)
 st.altair_chart(chart_u2)
 st.write("Senaste undersökningarna")
 
-df_show = modell.df.tail(2)[::-1][["Publiceringsdatum", "V", "S", "MP", "C", "L", "M", "KD", "SD", "Institut"]]
+df_show = modell.df.tail(3)[::-1][["Publiceringsdatum", "V", "S", "MP", "C", "L", "M", "KD", "SD", "Institut"]]
 df_show["Institut"] = df_show["Institut"] + df_show["Publiceringsdatum"].dt.strftime(" %m-%d")
 df_show.set_index("Institut", inplace=True)
 df_show = df_show[["V", "S", "MP", "C", "L", "M", "KD", "SD"]]
@@ -105,5 +105,4 @@ with st.expander("Data referenser"):
          där opinionssiffror finns samlade.
      """
     )
-    
 
