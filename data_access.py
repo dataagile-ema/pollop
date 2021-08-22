@@ -81,11 +81,12 @@ class DataAccess:
 
     @staticmethod
     def hämta_data(start_datum: datetime.date=None):
-        url = "https://raw.githubusercontent.com/hampusborgos/SwedishPolls/master/Data/Polls.csv"  # Make sure the url is the raw version of the file on GitHub
-        download = requests.get(url).content
-
-        # Reading the downloaded content and turning it into a pandas dataframe
-        df = pd.read_csv(io.StringIO(download.decode("utf-8")))
+        # url = "https://raw.githubusercontent.com/hampusborgos/SwedishPolls/master/Data/Polls.csv" 
+        # download = requests.get(url).content
+        # # Reading the downloaded content and turning it into a pandas dataframe
+        # df = pd.read_csv(io.StringIO(download.decode("utf-8")))
+        
+        df = pd.read_csv("polls.csv")
         zip_iterator = zip(DataAccess.orginal_kolumner, DataAccess.kolumner)
         rename_dict = dict(zip_iterator)
         df = df[DataAccess.orginal_kolumner]
