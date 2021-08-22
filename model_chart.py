@@ -5,7 +5,7 @@ from chart_by_block import ChartByBlockAddText
 from chart_by_party import ChartByPartyDateTimeSeries, ChartByPartyDateTimeSeriesLine
 from chart_by_party import ChartByPartyMonthMeanTimeSeries
 from charts_additions import Chart4PercentLineRule
-from pandas.tseries.offsets import MonthEnd
+
 
 import pandas as pd
 
@@ -28,9 +28,9 @@ class ModelChart:
 
     def visa_linje_små_partier(self):
         titel = "Opinionsdata för små partier"
-        subtitel = ["Visar medel för kalendermånad"]
+        subtitel = ["Medel för kalendermånad"]
 
-        chart_obj1 = ChartByPartyMonthMeanTimeSeries(data=self.df[self.df["Publiceringsdatum"] < pd.Timestamp.now() + MonthEnd(-1)], title=titel, subtitle=subtitel, urval=self.uv_små_partier)
+        chart_obj1 = ChartByPartyMonthMeanTimeSeries(self.df, title=titel, subtitle=subtitel, urval=self.uv_små_partier)
         c1 = chart_obj1.get_chart()
 
         chart_obj2 = Chart4PercentLineRule()
@@ -41,9 +41,9 @@ class ModelChart:
 
     def visa_linje_större_partier(self):
         titel = "Opinionsdata för större partier"
-        subtitel = ["Visar medel för kalendermånad"]
+        subtitel = ["Medel för kalendermånad"]
 
-        chart_obj1 = ChartByPartyMonthMeanTimeSeries(data=self.df[self.df["Publiceringsdatum"] < pd.Timestamp.now() + MonthEnd(-1)], title=titel, subtitle=subtitel, urval=self.uv_större_partier)
+        chart_obj1 = ChartByPartyMonthMeanTimeSeries(self.df, title=titel, subtitle=subtitel, urval=self.uv_större_partier)
         c1 = chart_obj1.get_chart()
 
         exp = chart_obj1.assemple_charts((c1), 14)
@@ -51,7 +51,7 @@ class ModelChart:
 
     def visa_spridningsdiagram_små_partier(self):
         titel = "Opinionsdata för små partier"
-        subtitel = ["Visar alla opinionsundersökningar"]
+        subtitel = ["Alla opinionsundersökningar"]
 
         chart_obj1 = Chart4PercentLineRule()
         c1 = chart_obj1.get_chart()
@@ -67,7 +67,7 @@ class ModelChart:
 
     def visa_spridningsdiagram_större_partier(self):
         titel = "Opinionsdata för större partier"
-        subtitel = ["Visar alla opinionsundersökningar"]
+        subtitel = ["Alla opinionsundersökningar"]
 
         chart_obj1 = ChartByPartyDateTimeSeriesLine(data=self.df_rullande_4, title=titel, subtitle=subtitel, urval=self.uv_större_partier)
         c1 = chart_obj1.get_chart()
@@ -80,7 +80,7 @@ class ModelChart:
 
 
     def visa_block_som_stacked_bar_30_dagars_medel(self):
-        subtitel = ["Visar medel för de senaste 30 dagarna"]
+        subtitel = ["Medel för de senaste 30 dagarna"]
         df_data = self.df_sista_30_dagar
 
         exp = self.__visa_block_som_stacked_bar(subtitel, df_data)

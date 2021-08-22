@@ -15,23 +15,27 @@ class ChartByPartyBase(ChartBase):
 class ChartByPartyMonthMeanTimeSeries(ChartByPartyBase):
     """ klass som visar opinionsläge för partier med medelvärden för kalendermånader"""
     def add_marker(self):
-        self.c = self.c.mark_line()
+        self.c = self.c.mark_tick(size=30, thickness=3, cornerRadius=2)
 
     def add_encode(self):
+        antal_m = alt.Tooltip("count(stöd):Q", title="antal mätningar")
         y_uttryck = "mean(stöd):Q"
-        datum_uttryck = "month(Publiceringsdatum):T"
+        datum_uttryck = "month(Publiceringsdatum):O"
         self.c = self.c.encode(
             x=alt.X(datum_uttryck, title="Månad"),
             y=alt.Y(y_uttryck, title="Procent"),
             color=self.get_alt_color_by_parti_and_urval(),
-            tooltip=["Parti:N", y_uttryck],
+            tooltip=["Parti:N", 
+                alt.Tooltip(y_uttryck, title = "medel" ),
+                alt.Tooltip("count(stöd):Q", title="antal mätningar")],
+            size=alt.Size("count(stöd):Q", legend = None),
         )
 
 
 class ChartByPartyDateTimeSeries(ChartByPartyBase):
     """ klass som visar opinionsläge för partier per datum """
     def add_marker(self):
-        #self.c = self.c.mark_point(opacity=0.36, size=32)
+
         self.c = self.c.mark_circle(opacity=0.36, size=32)
 
     def add_encode(self):

@@ -5,6 +5,24 @@ import data_access as da
 from streamlit.caching import cache
 import model_chart
 
+
+def visa_senaste_under_sökningarna(modell):
+    st.write("Senaste undersökningarna")
+    df_show = modell.df.tail(3)[::-1][["Publiceringsdatum", "V", "S", "MP", "C", "L", "M", "KD", "SD", "Institut"]]
+    df_show["Institut"] = df_show["Institut"] + df_show["Publiceringsdatum"].dt.strftime(" %m-%d")
+    df_show.set_index("Institut", inplace=True)
+    df_show = df_show[["V", "S", "MP", "C", "L", "M", "KD", "SD"]]
+    st.table(df_show.style.format({
+    "V": "{:.1f}",
+    "S": "{:.1f}",
+    "MP": "{:.1f}",
+    "C": "{:.1f}",
+    "L": "{:.1f}",
+    "M": "{:.1f}",
+    "KD": "{:.1f}",
+    "SD": "{:.1f}"},
+    ))
+
 # navigering
 def __sätt_val_0():
     st.session_state.first = 0
@@ -60,49 +78,36 @@ with right:
     )
 
 
-    if __vilket_val() == 0:
-        chart_u1 = modell.visa_spridningsdiagram_små_partier()
-        chart_u2 = modell.visa_linje_små_partier()
-    elif __vilket_val() == 1:
-        chart_u1 = modell.visa_spridningsdiagram_större_partier()
-        chart_u2 = modell.visa_linje_större_partier()
-    else:
-        chart_u1 = modell.visa_linje_för_block()
-        chart_u2 = modell.visa_block_som_stacked_bar_senaste_4_undesökningar()
-
+if __vilket_val() == 0:
+    chart_u1 = modell.visa_spridningsdiagram_små_partier()
+    chart_u2 = modell.visa_linje_små_partier()
+elif __vilket_val() == 1:
+    chart_u1 = modell.visa_spridningsdiagram_större_partier()
+    chart_u2 = modell.visa_linje_större_partier()
+else:
+    chart_u1 = modell.visa_linje_för_block()
+    chart_u2 = modell.visa_block_som_stacked_bar_senaste_4_undesökningar()
 
 
 st.altair_chart(chart_u1)
-st.altair_chart(chart_u2)
-st.write("Senaste undersökningarna")
 
-df_show = modell.df.tail(3)[::-1][["Publiceringsdatum", "V", "S", "MP", "C", "L", "M", "KD", "SD", "Institut"]]
-df_show["Institut"] = df_show["Institut"] + df_show["Publiceringsdatum"].dt.strftime(" %m-%d")
-df_show.set_index("Institut", inplace=True)
-df_show = df_show[["V", "S", "MP", "C", "L", "M", "KD", "SD"]]
-st.table(df_show.style.format({
-    "V": "{:.1f}",
-    "S": "{:.1f}",
-    "MP": "{:.1f}",
-    "C": "{:.1f}",
-    "L": "{:.1f}",
-    "M": "{:.1f}",
-    "KD": "{:.1f}",
-    "SD": "{:.1f}"},
-    ))
+if (__vilket_val() != 2):
+    st.write(modell.ge_meddelande_om_dagar_kvar_till_valet())
+    visa_senaste_under_sökningarna(modell)
+    st.altair_chart(chart_u2)
+else:
+    st.altair_chart(chart_u2)
+    st.write(modell.ge_meddelande_om_dagar_kvar_till_valet())
+    visa_senaste_under_sökningarna(modell)
 
-
-st.write(modell.ge_meddelande_om_dagar_kvar_till_valet())
-
-
-with st.expander("Data referenser"):
+with st.expander("Data referens"):
     st.write(
         """
-         All statistik kan hittas på 
-         https://val.digital/".
-         Den härs sidan använder 
-         val.digitals publika github repo 
-         där opinionssiffror finns samlade.
-     """
+            Mer statistik kan hittas på 
+            https://val.digital/".
+            Den här sidan använder 
+            val.digitals publika github repo 
+            där opinions finns samlade.
+        """
     )
 
