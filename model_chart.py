@@ -12,7 +12,8 @@ import pandas as pd
 
 
 class ModelChart:
-    def __init__(self) -> None:
+    def __init__(self, dagar_kar_text: str) -> None:
+        self.dagar_kvar_text = dagar_kar_text
         self.df = DataAccess.hämta_data("2021-02-01")
         self.df_rullande_4 = DataAccess.skapa_rullande_df(DataAccess.hämta_data("2021-01-01"), 4)
         self.uv_små_partier = DataAccess.hämta_urval_enligt_30_dagars_medel(
@@ -86,13 +87,13 @@ class ModelChart:
         exp = self.__visa_block_som_stacked_bar(subtitel, df_data)
         return exp
 
-    def visa_block_som_stacked_bar_senaste_4_undesökningar(self):
+    def visa_block_som_stacked_bar_senaste_4_undesökningar(self, spärr: bool):
         subtitel = ["Medel fyra senaste undersökningarna"]
         df_data = self.df.tail(4)
-        exp = self.__visa_block_som_stacked_bar(subtitel, df_data)
+        exp = self.__visa_block_som_stacked_bar(subtitel, df_data, spärr)
         return exp
 
-    def __visa_block_som_stacked_bar(self, subtitel, df_data):
+    def __visa_block_som_stacked_bar(self, subtitel, df_data, spärr):
         titel = "Opinionsdata för block"
 
         chart_obj1 = ChartByBlockBar(
@@ -101,25 +102,27 @@ class ModelChart:
             subtitle=subtitel,
             urval=self.uv_alla_partier,
             lookup_block=self.df_uppslag_block,
+            spärr=spärr
         )
         c1 = chart_obj1.get_chart()
         chart_obj2 = ChartByBlockAddText(
             data=df_data,
             urval=self.uv_alla_partier,
             lookup_block=self.df_uppslag_block,
+            spärr=spärr
         )
         c2 = chart_obj2.get_chart()
         exp = chart_obj1.assemple_charts((c1 + c2), 14)
         return exp
     
-    def visa_linje_för_block(self):
+    def visa_linje_för_block(self, spärr: bool):
         titel = "Opinionsdata för block"
         subtitel = ["Undersökning per datum"]
 
-        chart_obj1 = ChartByBlockDateTimeSeries(title=titel, subtitle=subtitel, data=self.df, urval=self.uv_alla_partier, lookup_block=self.df_uppslag_block)
+        chart_obj1 = ChartByBlockDateTimeSeries(title=titel, subtitle=subtitel, data=self.df, urval=self.uv_alla_partier, lookup_block=self.df_uppslag_block, spärr=spärr)
         c1 = chart_obj1.get_chart()
 
-        chart_obj2 = ChartByBlockDateTimeSeriesLine(title=titel, subtitle=subtitel, data=self.df_rullande_4, urval=self.uv_alla_partier, lookup_block=self.df_uppslag_block)
+        chart_obj2 = ChartByBlockDateTimeSeriesLine(title=titel, subtitle=subtitel, data=self.df_rullande_4, urval=self.uv_alla_partier, lookup_block=self.df_uppslag_block, spärr=spärr)
         c2 = chart_obj2.get_chart()
 
         exp = chart_obj1.assemple_charts((c2+c1), labelfont_size=14)

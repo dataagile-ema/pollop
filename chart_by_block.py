@@ -8,7 +8,8 @@ from types_def import riksdagsspärr
 
 
 class ChartByBlockBase(ChartBase):
-    def __init__(self, data: pd.DataFrame, title: str, subtitle, urval: Urval, lookup_block: pd.DataFrame):
+    def __init__(self, data: pd.DataFrame, title: str, subtitle, urval: Urval, lookup_block: pd.DataFrame, spärr: bool=True):
+        self.spärr = spärr
         self.lookup_block = lookup_block
         super().__init__(data=data, title=title, subtitle=subtitle, urval=urval)
 
@@ -19,9 +20,10 @@ class ChartByBlockBase(ChartBase):
         self.c = self.c.transform_lookup(lookup='Parti', from_=alt.LookupData(self.lookup_block, key='Parti', fields=['Block']))
 
     def add_filter(self):
-        self.c = self.c.transform_filter(
-                    (datum.medel_stöd > riksdagsspärr)
-                )
+        if self.spärr:
+            self.c = self.c.transform_filter(
+                        (datum.medel_stöd > riksdagsspärr)
+                    )
     
 
 
@@ -42,12 +44,12 @@ class ChartByBlockBar(ChartByBlockBase):
             color= self.get_alt_color_by_parti_and_urval(orient='right'),
             tooltip=["Parti:N", "medel_stöd:Q"],
         )
-
+    
 
 class ChartByBlockAddText(ChartByBlockBase):
-    def __init__(self, data: pd.DataFrame, urval: Urval, lookup_block: pd.DataFrame):
-        self.lookup_block = lookup_block
-        super().__init__(data, title = '', subtitle= '', urval=urval, lookup_block=lookup_block)
+    def __init__(self, data: pd.DataFrame, urval: Urval, lookup_block: pd.DataFrame, spärr: bool):
+
+        super().__init__(data, title = '', subtitle= '', urval=urval, lookup_block=lookup_block, spärr=spärr)
 
     def add_transform_aggregate(self):
         self.c = self.c.transform_aggregate(medel_stöd="mean(stöd)", groupby=["Parti"])

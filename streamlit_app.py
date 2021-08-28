@@ -53,51 +53,54 @@ st.set_page_config(page_title="Pollop", page_icon=im)
 """
 # Hur går det för..
 """
+dagar_kvar_till_val_text = model_chart.ModelChart.ge_meddelande_om_dagar_kvar_till_valet()
 @st.cache
 def get_model():
-    return model_chart.ModelChart()
+    return model_chart.ModelChart(dagar_kvar_till_val_text)
 modell = get_model()
 
 # grunddata navigering
-användar_val = ["de små partierna", "de större partierna", "de två blocken"]
+användar_val = ["de två blocken", "de små partierna", "de större partierna"]
 
 # navigering
 left, mid, right = st.columns(3)
 with left:
-    #st.button(
-    st.button(label=användar_val[0], on_click=__sätt_val_0, help="Ligger nära riksdagsspärren i undersökningarna")
-with mid:
     st.button(
-        användar_val[1], on_click=__sätt_val_1, help="Har minst 6% i undersökningarna"
-    )
-with right:
-    st.button(
-        användar_val[2],
-        on_click=__sätt_val_2,
+        användar_val[0],
+        on_click=__sätt_val_0,
         help="Nuvarande regeringsunderlag jämfört med högeroppositionen",
     )
 
+with mid:
+    st.button(label=användar_val[1], on_click=__sätt_val_1, help="Ligger nära riksdagsspärren i undersökningarna")
+
+with right:
+    st.button(
+    användar_val[2], on_click=__sätt_val_2, help="Har minst 6% i undersökningarna")
+
 
 if __vilket_val() == 0:
+    spärr = st.checkbox("Ta bort partier under spärr", True)
+    chart_u1 = modell.visa_linje_för_block(spärr)
+    chart_u2 = modell.visa_block_som_stacked_bar_senaste_4_undesökningar(spärr)
+elif __vilket_val() == 1:
     chart_u1 = modell.visa_spridningsdiagram_små_partier()
     chart_u2 = modell.visa_linje_små_partier()
-elif __vilket_val() == 1:
+else:
     chart_u1 = modell.visa_spridningsdiagram_större_partier()
     chart_u2 = modell.visa_linje_större_partier()
-else:
-    chart_u1 = modell.visa_linje_för_block()
-    chart_u2 = modell.visa_block_som_stacked_bar_senaste_4_undesökningar()
+
 
 
 st.altair_chart(chart_u1)
 
-if (__vilket_val() != 2):
-    st.write(modell.ge_meddelande_om_dagar_kvar_till_valet())
+if (__vilket_val() != 0):
+    st.write(modell.dagar_kvar_text)
     visa_senaste_under_sökningarna(modell)
     st.altair_chart(chart_u2)
 else:
     st.altair_chart(chart_u2)
-    st.write(modell.ge_meddelande_om_dagar_kvar_till_valet())
+    st.write(modell.dagar_kvar_text)
     visa_senaste_under_sökningarna(modell)
 
 with st.expander("Data referens"):
