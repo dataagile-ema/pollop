@@ -1,7 +1,7 @@
 import pandas as pd
 import altair as alt
 from abc import ABC, abstractmethod
-from types_def import Urval
+from urval import UrvalsLista
 from assemple_charts import AssembleCharts
 
 class ChartBase(ABC):
@@ -10,11 +10,11 @@ class ChartBase(ABC):
         data: pd.DataFrame,
         title: str = "",
         subtitle = [""],
-        urval: Urval = None,
+        urval: UrvalsLista = None,
     ):
         plot_title = alt.TitleParams(title, subtitle=subtitle)
         self.c: alt.Chart = alt.Chart(data=data, title=plot_title)
-        self.urval: Urval = urval
+        self.urval: UrvalsLista = urval
         self.add_configuration()
 
     def get_chart(self):

@@ -6,79 +6,54 @@ import io
 import locale
 from itertools import compress
 import datetime
-from types_def import Urval
+from grunddata import Grunddata
 
+
+orginal_kolumner = [
+    "M",
+    "L",
+    "C",
+    "KD",
+    "S",
+    "V",
+    "MP",
+    "SD",
+    "PublDate",
+    "collectPeriodFrom",
+    "collectPeriodTo",
+    "house",
+]
+kolumner = [
+    "M",
+    "L",
+    "C",
+    "KD",
+    "S",
+    "V",
+    "MP",
+    "SD",
+    "Publiceringsdatum",
+    "Insamlingsdatum_fr_o_m",
+    "Insamlingsdatum_t_o_m",
+    "Institut",
+]
+
+visa_kolumner = [
+    "Publiceringsdatum",
+    "V",
+    "S",
+    "MP",
+    "C",
+    "L",
+    "M",
+    "KD",
+    "SD",
+    "Insamlingsdatum_fr_o_m",
+    "Insamlingsdatum_t_o_m",
+    "Institut",
+]
 
 class DataAccess:
-    block = [
-        "Regering + stöd",
-        "Regering + stöd",
-        "Regering + stöd",
-        "Regering + stöd",
-        "Högeropposition",
-        "Högeropposition",
-        "Högeropposition",
-        "Högeropposition",
-    ]
-    färger_partier = [
-        "#B00000",
-        "#ed1b34",
-        "#83CF39",
-        "#009933",
-        "#6BB7EC",
-        "#1B49DD",
-        "#231977",
-        "#dddd00",
-    ]
-    partier = ["V", "S", "MP", "C", "L", "M", "KD", "SD"]
-    orginal_kolumner = [
-        "M",
-        "L",
-        "C",
-        "KD",
-        "S",
-        "V",
-        "MP",
-        "SD",
-        "PublDate",
-        "collectPeriodFrom",
-        "collectPeriodTo",
-        "house",
-    ]
-    kolumner = [
-        "M",
-        "L",
-        "C",
-        "KD",
-        "S",
-        "V",
-        "MP",
-        "SD",
-        "Publiceringsdatum",
-        "Insamlingsdatum_fr_o_m",
-        "Insamlingsdatum_t_o_m",
-        "Institut",
-    ]
-
-    visa_kolumner = [
-        "Publiceringsdatum",
-        "V",
-        "S",
-        "MP",
-        "C",
-        "L",
-        "M",
-        "KD",
-        "SD",
-        "Insamlingsdatum_fr_o_m",
-        "Insamlingsdatum_t_o_m",
-        "Institut",
-    ]
-
-    gräns_småparti = 6.0
-
-
-
     @staticmethod
     def hämta_data(start_datum: datetime.date=None):
         url = "https://raw.githubusercontent.com/hampusborgos/SwedishPolls/master/Data/Polls.csv" 
@@ -87,12 +62,12 @@ class DataAccess:
         df = pd.read_csv(io.StringIO(download.decode("utf-8")))
         
         #df = pd.read_csv("polls.csv")
-        zip_iterator = zip(DataAccess.orginal_kolumner, DataAccess.kolumner)
+        zip_iterator = zip(orginal_kolumner, kolumner)
         rename_dict = dict(zip_iterator)
-        df = df[DataAccess.orginal_kolumner]
+        df = df[orginal_kolumner]
         df = df.rename(columns=rename_dict)
         df["Publiceringsdatum"] = pd.to_datetime(df["Publiceringsdatum"])
-        df = df.reindex(columns=DataAccess.visa_kolumner)
+        df = df.reindex(columns=visa_kolumner)
         if start_datum is not None:
             df = df[df["Publiceringsdatum"] > start_datum]
         df.set_index('Publiceringsdatum')
@@ -101,7 +76,7 @@ class DataAccess:
         return df
 
     @staticmethod 
-    def skapa_rullande_df(data: pd.DataFrame, window: int):
+    def skapa_rullande_medel(data: pd.DataFrame, window: int):
         df_rol = data.set_index('Publiceringsdatum')
         df_rol = df_rol.rolling(window).mean()
         df_rol.reset_index(inplace=True)
@@ -124,35 +99,13 @@ class DataAccess:
     @staticmethod
     def hämta_medelvärde_senaste_30_dagarna(df: pd.DataFrame):
         df = DataAccess.ge_data_for_sista_30_dagarna(df)
-        series = df[DataAccess.partier].apply("mean")
+        series = df[Grunddata.partier].apply("mean")
         return series
 
-    @staticmethod
-    def hämta_urval_enligt_30_dagars_medel(df: pd.DataFrame, över_gräns: bool, gräns: double):
-        """ Returnerar filtrerad tidsserie, partier och färger baserat på om de är över gräns för småparti """
-
-        serie = DataAccess.hämta_medelvärde_senaste_30_dagarna(df)
-
-        if över_gräns == False:
-            parti_urval_bool = list(serie > gräns)
-        else:
-            parti_urval_bool = list(serie < gräns)
-
-        partier_urval = list(compress(DataAccess.partier, parti_urval_bool))
-        färger_partier_urval = list(
-            compress(DataAccess.färger_partier, parti_urval_bool)
-        )
-        up = Urval(färger_partier_urval, partier_urval)
-        return up
-
-    @staticmethod
-    def hämta_urval_alla_partier():
-        up = Urval(DataAccess.färger_partier, DataAccess.partier)
-        return up
 
     @staticmethod
     def hämta_df_för_uppslag_block():
         df_uppslag_block = pd.DataFrame()
-        df_uppslag_block["Parti"] = DataAccess.partier
-        df_uppslag_block["Block"] = DataAccess.block
+        df_uppslag_block["Parti"] = Grunddata.partier
+        df_uppslag_block["Block"] = Grunddata.block_parti
         return df_uppslag_block

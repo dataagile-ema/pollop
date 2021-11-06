@@ -3,34 +3,24 @@ from PIL import Image
 from itertools import compress
 import data_access as da
 from streamlit.caching import cache
-import model_chart
+from model_chart import ModelChart
+from grunddata import Grunddata
 
 
-def visa_senaste_under_sökningarna(modell):
+def visa_tabell_senaste_under_sökningarna(modell: ModelChart):
     st.write("Senaste undersökningarna")
-    df_show = modell.df.tail(4)[::-1][["Publiceringsdatum", "V", "S", "MP", "C", "L", "M", "KD", "SD", "Institut"]]
-    df_show["Institut"] = df_show["Institut"] + df_show["Publiceringsdatum"].dt.strftime(" %m-%d")
-    df_show.set_index("Institut", inplace=True)
-    df_show = df_show[["V", "S", "MP", "C", "L", "M", "KD", "SD"]]
-    st.table(df_show.style.format({
-    "V": "{:.1f}",
-    "S": "{:.1f}",
-    "MP": "{:.1f}",
-    "C": "{:.1f}",
-    "L": "{:.1f}",
-    "M": "{:.1f}",
-    "KD": "{:.1f}",
-    "SD": "{:.1f}"},
-    ))
+    df_show = modell.hämta_df_senaste_undersökningar()
+    
+    # make dictionary with partier from Grunddata as first column and "{}" as the second column
+    partier_dict = {parti: "{:.1f}" for parti in Grunddata.partier}
+    st.table(df_show.style.format(partier_dict,))
 
 # navigering
 def __sätt_val_0():
     st.session_state.first = 0
 
-
 def __sätt_val_1():
     st.session_state.first = 1
-
 
 def __sätt_val_2():
     st.session_state.first = 2
@@ -53,14 +43,14 @@ st.set_page_config(page_title="Pollop", page_icon=im)
 """
 # Hur går det för..
 """
-dagar_kvar_till_val_text = model_chart.ModelChart.ge_meddelande_om_dagar_kvar_till_valet()
+dagar_kvar_till_val_text = ModelChart.ge_meddelande_om_dagar_kvar_till_valet()
 @st.cache
 def get_model():
-    return model_chart.ModelChart(dagar_kvar_till_val_text)
+    return ModelChart(dagar_kvar_till_val_text)
 modell = get_model()
 
 # grunddata navigering
-användar_val = ["de två blocken", "de små partierna", "de större partierna"]
+användar_val = ["Blocken", "Partierna", "Partier nära spärren"]
 
 # navigering
 left, mid, right = st.columns(3)
@@ -72,11 +62,12 @@ with left:
     )
 
 with mid:
-    st.button(label=användar_val[1], on_click=__sätt_val_1, help="Ligger nära riksdagsspärren i undersökningarna")
+    st.button(
+    användar_val[1], on_click=__sätt_val_2, help="Alla partier")
 
 with right:
-    st.button(
-    användar_val[2], on_click=__sätt_val_2, help="Har minst 6% i undersökningarna")
+    st.button(label=användar_val[2], on_click=__sätt_val_1, help="Ligger nära riksdagsspärren i undersökningarna")
+
 
 
 if __vilket_val() == 0:
@@ -87,21 +78,22 @@ elif __vilket_val() == 1:
     chart_u1 = modell.visa_spridningsdiagram_små_partier()
     chart_u2 = modell.visa_linje_små_partier()
 else:
-    chart_u1 = modell.visa_spridningsdiagram_större_partier()
-    chart_u2 = modell.visa_linje_större_partier()
+    chart_u1 = modell.visa_spridningsdiagram_partier_högeropposition()
+    chart_u2 = modell.visa_spridningsdiagram_partier_regering_stöd()
+    
 
 
 
 st.altair_chart(chart_u1)
 
-if (__vilket_val() != 0):
+if (__vilket_val() == 1):
     st.write(modell.dagar_kvar_text)
-    visa_senaste_under_sökningarna(modell)
+    visa_tabell_senaste_under_sökningarna(modell)
     st.altair_chart(chart_u2)
 else:
     st.altair_chart(chart_u2)
     st.write(modell.dagar_kvar_text)
-    visa_senaste_under_sökningarna(modell)
+    visa_tabell_senaste_under_sökningarna(modell)
 
 with st.expander("Data referens"):
     st.write(

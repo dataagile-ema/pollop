@@ -1,14 +1,14 @@
 from chart_base import ChartBase
-from types_def import Urval
+from urval import UrvalsLista
 import pandas as pd
 import altair as alt
 from altair import datum
-from types_def import riksdagsspärr
+from grunddata import Grunddata
 
 
 
 class ChartByBlockBase(ChartBase):
-    def __init__(self, data: pd.DataFrame, title: str, subtitle, urval: Urval, lookup_block: pd.DataFrame, spärr: bool=True):
+    def __init__(self, data: pd.DataFrame, title: str, subtitle, urval: UrvalsLista, lookup_block: pd.DataFrame, spärr: bool=True):
         self.spärr = spärr
         self.lookup_block = lookup_block
         super().__init__(data=data, title=title, subtitle=subtitle, urval=urval)
@@ -22,7 +22,7 @@ class ChartByBlockBase(ChartBase):
     def add_filter(self):
         if self.spärr:
             self.c = self.c.transform_filter(
-                        (datum.medel_stöd > riksdagsspärr)
+                        (datum.medel_stöd > Grunddata.riksdagsspärr)
                     )
     
 
@@ -47,7 +47,7 @@ class ChartByBlockBar(ChartByBlockBase):
     
 
 class ChartByBlockAddText(ChartByBlockBase):
-    def __init__(self, data: pd.DataFrame, urval: Urval, lookup_block: pd.DataFrame, spärr: bool):
+    def __init__(self, data: pd.DataFrame, urval: UrvalsLista, lookup_block: pd.DataFrame, spärr: bool):
 
         super().__init__(data, title = '', subtitle= '', urval=urval, lookup_block=lookup_block, spärr=spärr)
 
