@@ -1,16 +1,26 @@
 
+from enum import Enum
+class block_index(Enum):
+    regering = 0
+    höger_op = 1
 class Grunddata:
-    block_parti = [
-        "Regering + stöd",
-        "Regering + stöd",
-        "Regering + stöd",
-        "Regering + stöd",
-        "Högeropposition",
-        "Högeropposition",
-        "Högeropposition",
-        "Högeropposition",
-    ]
-    färger_partier = [
+    blocknamn = ["",""]
+    blocknamn[block_index.regering.value] = "Regering + stöd"
+    blocknamn[block_index.höger_op.value] = "Högeropposition"
+
+    partier = ["V", "S", "MP", "C", "L", "M", "KD", "SD"]
+
+    block_för_parti = [
+        blocknamn[block_index.regering.value],
+        blocknamn[block_index.regering.value],
+        blocknamn[block_index.regering.value],
+        blocknamn[block_index.regering.value],
+        blocknamn[block_index.höger_op.value],
+        blocknamn[block_index.höger_op.value],
+        blocknamn[block_index.höger_op.value],
+        blocknamn[block_index.höger_op.value]]
+        
+    färg_för_parti = [
         "#B00000",
         "#ed1b34",
         "#83CF39",
@@ -20,6 +30,13 @@ class Grunddata:
         "#231977",
         "#dddd00",
     ]
-    partier = ["V", "S", "MP", "C", "L", "M", "KD", "SD"]
+
     gräns_småparti = 4.5
     riksdagsspärr = 4.0
+
+
+
+
+
+
+

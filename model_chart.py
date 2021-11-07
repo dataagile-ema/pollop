@@ -8,6 +8,7 @@ from charts_additions import Chart4PercentLineRule
 import pandas as pd
 from urval import Urval
 from grunddata import Grunddata
+from grunddata import block_index
 
 
 class ModelChart:
@@ -17,19 +18,16 @@ class ModelChart:
         self.df_rullande_4 = DataAccess.skapa_rullande_medel(DataAccess.hämta_data("2021-01-01"), 4)
         self.df_sista_30_dagar = DataAccess.ge_data_for_sista_30_dagarna(self.df)
         self.df_uppslag_block = DataAccess.hämta_df_för_uppslag_block()
+        self.__sätt_urval()
 
-        self.sätt_urval()
-
-    def sätt_urval(self):
+    def __sätt_urval(self):
         self.uv_små_partier = Urval.hämta_urval_enligt_30_dagars_medel(
             self.df, True, Grunddata.gräns_småparti
         )
-        self.uv_större_partier = Urval.hämta_urval_enligt_30_dagars_medel(
-            self.df, False, Grunddata.gräns_småparti
-        )
+
         self.uv_alla_partier = Urval.hämta_urval_alla_partier()
-        self.uv_högeropposition = Urval.hämta_urval_för_block("Högeropposition")
-        self.uv_regering_stöd = Urval.hämta_urval_för_block("Regering + stöd")
+        self.uv_högeropposition = Urval.hämta_urval_för_block(Grunddata.blocknamn[block_index.höger_op.value])
+        self.uv_regering_stöd = Urval.hämta_urval_för_block(Grunddata.blocknamn[block_index.regering.value])
 
     def visa_linje_små_partier(self):
         titel = "Partier nära spärren"

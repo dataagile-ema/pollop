@@ -107,5 +107,5 @@ class DataAccess:
     def hämta_df_för_uppslag_block():
         df_uppslag_block = pd.DataFrame()
         df_uppslag_block["Parti"] = Grunddata.partier
-        df_uppslag_block["Block"] = Grunddata.block_parti
+        df_uppslag_block["Block"] = Grunddata.block_för_parti
         return df_uppslag_block

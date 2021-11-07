@@ -38,7 +38,7 @@ class ChartByBlockBar(ChartByBlockBase):
         self.c = self.c.encode(
             x=alt.X(
                 "Block:O",
-                scale=alt.Scale(domain=["Regering + stöd", "Högeropposition"]),
+                scale=alt.Scale(domain=Grunddata.blocknamn),
             ),
             y=alt.Y("medel_stöd:Q", title="Procent"),
             color= self.get_alt_color_by_parti_and_urval(orient='right'),
@@ -82,7 +82,7 @@ class ChartByBlockDateTimeSeries(ChartByBlockBase):
             color = alt.Color(
                     "Block:O",
                      scale=alt.Scale(
-                        domain=["Regering + stöd", "Högeropposition"],
+                        domain=Grunddata.blocknamn,
                         range=["#FF8080", "#80C0FF"],
                     ),
                     legend=alt.Legend(orient='top'),
