@@ -43,7 +43,7 @@ st.set_page_config(page_title="Pollop", page_icon=im)
 # Hur går det för..
 """
 dagar_kvar_till_val_text = ModelChart.ge_meddelande_om_dagar_kvar_till_valet()
-@st.cache
+#@st.cache
 def get_model():
     return ModelChart(dagar_kvar_till_val_text)
 modell = get_model()
