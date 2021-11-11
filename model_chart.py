@@ -8,7 +8,9 @@ from charts_additions import Chart4PercentLineRule
 import pandas as pd
 from urval import Urval
 from grunddata import Grunddata
-from grunddata import block_index
+from grunddata import BLOCK_INDEX_REGERING
+from grunddata import BLOCK_INDEX_HÖGER_OP
+
 
 
 class ModelChart:
@@ -26,8 +28,8 @@ class ModelChart:
         )
 
         self.uv_alla_partier = Urval.hämta_urval_alla_partier()
-        self.uv_högeropposition = Urval.hämta_urval_för_block(Grunddata.blocknamn[block_index.höger_op.value])
-        self.uv_regering_stöd = Urval.hämta_urval_för_block(Grunddata.blocknamn[block_index.regering.value])
+        self.uv_högeropposition = Urval.hämta_urval_för_block(Grunddata.blocknamn[BLOCK_INDEX_HÖGER_OP])
+        self.uv_regering_stöd = Urval.hämta_urval_för_block(Grunddata.blocknamn[BLOCK_INDEX_REGERING])
 
     def visa_linje_små_partier(self):
         titel = "Partier nära spärren"
