@@ -2,7 +2,6 @@ import streamlit as st
 from PIL import Image
 from itertools import compress
 import data_access as da
-from streamlit.caching import cache
 from model_chart import ModelChart
 from grunddata import Grunddata
 
@@ -102,7 +101,7 @@ with st.expander("Data referens"):
             https://val.digital/".
             Den här sidan använder 
             val.digitals publika github repo 
-            där opinions finns samlade.
+            där opinionsdata finns samlade.
         """
     )
 
