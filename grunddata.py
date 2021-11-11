@@ -1,24 +1,24 @@
 
-from enum import Enum
-class block_index(Enum):
-    regering = 0
-    höger_op = 1
+
+
+BLOCK_INDEX_REGERING = 0
+BLOCK_INDEX_HÖGER_OP = 1
 class Grunddata:
     blocknamn = ["",""]
-    blocknamn[block_index.regering.value] = "Regering + stöd"
-    blocknamn[block_index.höger_op.value] = "Högeropposition"
+    blocknamn[BLOCK_INDEX_REGERING] = "Regering + stöd"
+    blocknamn[BLOCK_INDEX_HÖGER_OP] = "Högeropposition"
 
     partier = ["V", "S", "MP", "C", "L", "M", "KD", "SD"]
 
     block_för_parti = [
-        blocknamn[block_index.regering.value],
-        blocknamn[block_index.regering.value],
-        blocknamn[block_index.regering.value],
-        blocknamn[block_index.regering.value],
-        blocknamn[block_index.höger_op.value],
-        blocknamn[block_index.höger_op.value],
-        blocknamn[block_index.höger_op.value],
-        blocknamn[block_index.höger_op.value]]
+        blocknamn[BLOCK_INDEX_REGERING],
+        blocknamn[BLOCK_INDEX_REGERING],
+        blocknamn[BLOCK_INDEX_REGERING],
+        blocknamn[BLOCK_INDEX_REGERING],
+        blocknamn[BLOCK_INDEX_HÖGER_OP],
+        blocknamn[BLOCK_INDEX_HÖGER_OP],
+        blocknamn[BLOCK_INDEX_HÖGER_OP],
+        blocknamn[BLOCK_INDEX_HÖGER_OP]]
         
     färg_för_parti = [
         "#B00000",
