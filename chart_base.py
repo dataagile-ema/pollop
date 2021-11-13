@@ -65,6 +65,7 @@ class ChartBase(ABC):
 
         color = alt.Color(
                     "Parti:N",
+                    
                     scale=alt.Scale(
                         domain=self.urval.partier_urval,
                         range=self.urval.färger_partier_urval,
