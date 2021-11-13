@@ -42,7 +42,6 @@ st.set_page_config(page_title="Pollop", page_icon=im)
 """
 # Hur går det för..
 """
-st.text("Sidan är ur funktion i väntan på en patch för graf-biblioteket altair")
 dagar_kvar_till_val_text = ModelChart.ge_meddelande_om_dagar_kvar_till_valet()
 @st.cache
 def get_model():
