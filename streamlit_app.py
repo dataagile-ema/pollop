@@ -83,14 +83,14 @@ else:
 
 
 
-st.altair_chart(chart_u1)
+st.altair_chart(chart_u1, use_container_width=True)
 
 if (__vilket_val() == 1):
     st.write(modell.dagar_kvar_text)
     visa_tabell_senaste_under_sökningarna(modell)
-    st.altair_chart(chart_u2)
+    st.altair_chart(chart_u2, use_container_width=True)
 else:
-    st.altair_chart(chart_u2)
+    st.altair_chart(chart_u2, use_container_width=True)
     st.write(modell.dagar_kvar_text)
     visa_tabell_senaste_under_sökningarna(modell)
 
