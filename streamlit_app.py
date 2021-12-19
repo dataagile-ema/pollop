@@ -77,8 +77,9 @@ elif __vilket_val() == 1:
     chart_u1 = modell.visa_spridningsdiagram_små_partier()
     chart_u2 = modell.visa_linje_små_partier()
 else:
-    chart_u1 = modell.visa_spridningsdiagram_partier_högeropposition()
-    chart_u2 = modell.visa_spridningsdiagram_partier_regering_stöd()
+    chart_u1 = modell.visa_spridningsdiagram_partier_regering_stöd()
+    chart_u2 = modell.visa_spridningsdiagram_partier_högeropposition()
+
     
 
 
