@@ -14,6 +14,7 @@ def visa_tabell_senaste_under_sökningarna(modell: ModelChart):
     partier_dict = {parti: "{:.1f}" for parti in Grunddata.partier}
     st.table(df_show.style.format(partier_dict,))
 
+
 # navigering
 def __sätt_val_0():
     st.session_state.first = 0
@@ -95,14 +96,10 @@ else:
     st.write(modell.dagar_kvar_text)
     visa_tabell_senaste_under_sökningarna(modell)
 
-with st.expander("Data referens"):
-    st.write(
-        """
-            Mer statistik kan hittas på 
-            https://val.digital/".
-            Den här sidan använder 
-            val.digitals publika github repo 
-            där opinionsdata finns samlade.
-        """
-    )
+st.write(
+    """
+        All sammanställd opinionsdata kommer från Måns Magnussons Github:
+        https://github.com/MansMeg/SwedishPolls. 
+        För att hitta mer sammanställningar opinionsundersökningar rekommenderas https://val.digital/
+    """    )
 
