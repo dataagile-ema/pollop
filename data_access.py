@@ -56,7 +56,9 @@ visa_kolumner = [
 class DataAccess:
     @staticmethod
     def hämta_data(start_datum: datetime.date=None):
-        url = "https://raw.githubusercontent.com/MansMeg/SwedishPolls/master/Data/Polls.csv" 
+ 
+        url = "https://raw.githubusercontent.com/hampusborgos/SwedishPolls/master/Data/Polls.csv" 
+          
         download = requests.get(url).content
         # Reading the downloaded content and turning it into a pandas dataframe
         df = pd.read_csv(io.StringIO(download.decode("utf-8")))
