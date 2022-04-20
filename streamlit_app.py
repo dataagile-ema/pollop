@@ -105,5 +105,4 @@ st.write(
 
 with st.expander("Referenser"):
     st.markdown("Se https://github.com/dataagile-ema för kontaktuppgifter")
-
-st.markdown('![Tick](https://shields-io-visitor-counter.herokuapp.com/badge?page=https://share.streamlit.io/dataagile-ema/pollop&label=VisitorsCount&labelColor=000000&logo=GitHub&logoColor=FFFFFF&color=1D70B8&style=for-the-badge)')
+st.markdown('![Tick](https://shields-io-visitor-counter.herokuapp.com/badge?page=https://share.streamlit.io/dataagile-ema/pollop&label=Tick&labelColor=000000&logo=GitHub&logoColor=FFFFFF&color=1D70B8&style=for-the-badge)')
