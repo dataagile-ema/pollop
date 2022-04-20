@@ -103,3 +103,6 @@ st.write(
         För att hitta mer statistik för opinionsundersökningar rekommenderas https://val.digital/
     """    )
 
+with st.expander("Referenser"):
+    st.markdown("Se https://github.com/dataagile-ema för kontaktuppgifter")
+    st.markdown('![Visitor count](https://shields-io-visitor-counter.herokuapp.com/badge?page=https://share.streamlit.io/dataagile-ema/pollop&label=VisitorsCount&labelColor=000000&logo=GitHub&logoColor=FFFFFF&color=1D70B8&style=for-the-badge)')
