@@ -99,7 +99,7 @@ else:
 st.write(
     """
         All sammanställd opinionsdata kommer från Hampus Joakim Borgos Github:
-        https://github.com/hampusborgos/SwedishPolls. 
+        https://github.com/hampusborgos/SwedishPolls eller från Måns Magnusseons Github: https://github.com/MansMeg/SwedishPolls.
         För att hitta mer statistik för opinionsundersökningar rekommenderas https://val.digital/
     """    )
 
