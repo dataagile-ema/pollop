@@ -81,9 +81,6 @@ else:
     chart_u1 = modell.visa_spridningsdiagram_partier_regering_stöd()
     chart_u2 = modell.visa_spridningsdiagram_partier_högeropposition()
 
-    
-
-
 
 st.altair_chart(chart_u1, use_container_width=True)
 

@@ -20,7 +20,7 @@ class ChartByPartyMonthMeanTimeSeries(ChartByPartyBase):
     def add_encode(self):
         antal_m = alt.Tooltip("count(stöd):Q", title="antal mätningar")
         y_uttryck = "mean(stöd):Q"
-        datum_uttryck = "month(Publiceringsdatum):O"
+        datum_uttryck = "yearmonth(Publiceringsdatum):O"
         self.c = self.c.encode(
             x=alt.X(datum_uttryck, title="Månad"),
             y=alt.Y(y_uttryck, title="Procent"),

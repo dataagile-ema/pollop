@@ -35,16 +35,7 @@ class ModelChart:
         titel = "Partier nära spärren"
         subtitel = ["Medel för kalendermånad innverande år"]
 
-        # get current date and time
-        now = pd.datetime.now()
-        # get current year from now
-        current_year = now.year
-
-        # filter self.df so that Publiceringsdatum is in current year
-        df_data = self.df[self.df["Publiceringsdatum"].dt.year == current_year]
-
-
-        chart_obj1 = ChartByPartyMonthMeanTimeSeries(df_data, title=titel, subtitle=subtitel, urval=self.uv_små_partier)
+        chart_obj1 = ChartByPartyMonthMeanTimeSeries(self.df, title=titel, subtitle=subtitel, urval=self.uv_små_partier)
         c1 = chart_obj1.get_chart()
 
         chart_obj2 = Chart4PercentLineRule()
