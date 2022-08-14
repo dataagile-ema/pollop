@@ -31,7 +31,7 @@ class Grunddata:
         "#dddd00",
     ]
 
-    gräns_småparti = 4.5
+    gräns_småparti = 6
     riksdagsspärr = 4.0
 
 
