@@ -4,7 +4,7 @@ from chart_by_block import ChartByBlockBar, ChartByBlockDateTimeSeries, ChartByB
 from chart_by_block import ChartByBlockAddText
 from chart_by_party import ChartByPartyDateTimeSeries, ChartByPartyDateTimeSeriesLine
 from chart_by_party import ChartByPartyMonthMeanTimeSeries
-from charts_additions import Chart4PercentLineRule
+from charts_additions import Chart4PercentLineRule, ChartElectionDayRule
 import pandas as pd
 from urval import Urval
 from grunddata import Grunddata
@@ -137,7 +137,11 @@ class ModelChart:
         chart_obj2 = ChartByBlockDateTimeSeriesLine(title=titel, subtitle=subtitel, data=self.df_rullande_4, urval=self.uv_alla_partier, lookup_block=self.df_uppslag_block, spärr=spärr)
         c2 = chart_obj2.get_chart()
 
-        exp = chart_obj1.assemple_charts((c2+c1), labelfont_size=14)
+        chart_obj3 = ChartElectionDayRule()
+        c3 = chart_obj3.get_chart()
+
+
+        exp = chart_obj1.assemple_charts((c2+c1+c3), labelfont_size=14)
         return exp
 
     def hämta_df_senaste_undersökningar(self):

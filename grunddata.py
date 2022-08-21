@@ -34,6 +34,8 @@ class Grunddata:
     gräns_småparti = 6
     riksdagsspärr = 4.0
 
+    valdag = "2022-09-11"
+
 
 
 

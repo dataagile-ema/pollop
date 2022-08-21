@@ -94,7 +94,7 @@ class DataAccess:
     @staticmethod
     def ge_dagar_kvar_till_valet():
         idag = pd.to_datetime("today")
-        valdag = pd.to_datetime("2022-09-11")
+        valdag = pd.to_datetime(Grunddata.valdag)
         antal_dagar_till_valet = (valdag - idag).days + 1
         return antal_dagar_till_valet
 
