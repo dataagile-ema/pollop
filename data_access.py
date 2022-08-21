@@ -78,11 +78,11 @@ class DataAccess:
         return df
 
     @staticmethod 
-    def skapa_rullande_medel(data: pd.DataFrame, window: int):
+    def skapa_rullande_medel(start_datum: datetime.date, data: pd.DataFrame, window: int):
         df_rol = data.set_index('Publiceringsdatum')
         df_rol = df_rol.rolling(window).mean()
         df_rol.reset_index(inplace=True)
-        df_rol = df_rol[df_rol["Publiceringsdatum"] > '2021-02-01']
+        df_rol = df_rol[df_rol["Publiceringsdatum"] > start_datum]
         return df_rol
 
     @staticmethod 

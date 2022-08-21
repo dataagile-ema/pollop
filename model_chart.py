@@ -16,8 +16,11 @@ from grunddata import BLOCK_INDEX_HÖGER_OP
 class ModelChart:
     def __init__(self, dagar_kar_text: str) -> None:
         self.dagar_kvar_text = dagar_kar_text
-        self.df = DataAccess.hämta_data("2021-02-01")
-        self.df_rullande_4 = DataAccess.skapa_rullande_medel(DataAccess.hämta_data("2021-01-01"), 4)
+
+        start_datum = "2022-03-01"
+
+        self.df = DataAccess.hämta_data(start_datum)
+        self.df_rullande_4 = DataAccess.skapa_rullande_medel(start_datum, DataAccess.hämta_data("2021-01-01"), 4)
         self.df_sista_30_dagar = DataAccess.ge_data_for_sista_30_dagarna(self.df)
         self.df_uppslag_block = DataAccess.hämta_df_för_uppslag_block()
         self.__sätt_urval()

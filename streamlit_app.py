@@ -71,7 +71,7 @@ with right:
 
 
 if __vilket_val() == 0:
-    spärr = st.checkbox("Ta bort partier under spärr", True)
+    spärr = st.checkbox("Ta bort partier under spärr", False)
     chart_u1 = modell.visa_linje_för_block(spärr)
     chart_u2 = modell.visa_block_som_stacked_bar_senaste_4_undesökningar(spärr)
 elif __vilket_val() == 1:
