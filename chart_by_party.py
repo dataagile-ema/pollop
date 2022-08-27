@@ -36,7 +36,7 @@ class ChartByPartyDateTimeSeries(ChartByPartyBase):
     """ klass som visar opinionsläge för partier per datum """
     def add_marker(self):
 
-        self.c = self.c.mark_circle(opacity=0.36, size=32)
+        self.c = self.c.mark_circle(opacity=0.25, size=32)
 
     def add_encode(self):
         y_uttryck = "stöd:Q"
