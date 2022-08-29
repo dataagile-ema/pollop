@@ -87,8 +87,7 @@ class DataAccess:
         n_multiple = n - (n % window)
         # keep last n rows
         df_rol = df_rol.iloc[-n_multiple:]
-
-        df_rol = df_rol.rolling(window).mean().shift(-2)
+        df_rol = df_rol.rolling(window).mean().shift(-1)
         df_rol.reset_index(inplace=True)
         df_rol = df_rol[df_rol["Publiceringsdatum"] > start_datum]
         return df_rol
