@@ -17,7 +17,7 @@ class ModelChart:
     def __init__(self, dagar_kar_text: str) -> None:
         self.dagar_kvar_text = dagar_kar_text
 
-        start_datum = "2022-06-01"
+        start_datum = "2022-07-01"
 
         self.df = DataAccess.hämta_data(start_datum)
         self.df_rullande_4 = DataAccess.skapa_rullande_medel(start_datum, DataAccess.hämta_data("2021-01-01"), 4)
