@@ -83,7 +83,7 @@ class DataAccess:
         df_rol = df_rol.set_index('Publiceringsdatum')
 
         n = len(df_rol)
-        shift_n = (n % window) - 1
+        shift_n = (n % window) - 4
         df_rol = df_rol.rolling(window).mean().shift(shift_n)
         df_rol.reset_index(inplace=True)
         df_rol = df_rol[df_rol["Publiceringsdatum"] > start_datum]
