@@ -154,4 +154,9 @@ class ModelChart:
     @staticmethod
     def ge_meddelande_om_dagar_kvar_till_valet():
         dagar = DataAccess.ge_dagar_kvar_till_valet()
-        return f"Dagar till valet: {dagar}"
+        import datetime as dt
+        # get current time
+        current_time = dt.datetime.now()
+        # get current hour as text
+        current_hour = current_time.strftime("%H")
+        return f"Dagar till valet: {dagar}. Data uppdatet kl {current_hour}."
