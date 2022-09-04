@@ -159,4 +159,4 @@ class ModelChart:
         now = dt.datetime.now(dt.timezone(dt.timedelta(hours=2)))
         # get current hour as text
         current_hour = now.strftime("%H")
-        return f"Dagar till valet: {dagar}. Data uppdaterat kl {current_hour}."
+        return f"Dagar till valet: {dagar} (uppdaterat {current_hour}:00)"
