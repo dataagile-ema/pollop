@@ -78,7 +78,7 @@ class ChartByBlockDateTimeSeries(ChartByBlockBase):
         datum_uttryck = "Publiceringsdatum:T"
         self.c = self.c.encode(
             x=alt.X(datum_uttryck, title="Månad"),
-            y=alt.Y(y_uttryck, title="Procent", scale=alt.Scale(domain=(39, 54))),
+            y=alt.Y(y_uttryck, title="Procent", scale=alt.Scale(domain=(44, 54))),
             color = alt.Color(
                     "Block:O",
                      scale=alt.Scale(

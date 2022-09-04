@@ -17,7 +17,7 @@ class ModelChart:
     def __init__(self, dagar_kar_text: str) -> None:
         self.dagar_kvar_text = dagar_kar_text
 
-        start_datum = "2022-07-01"
+        start_datum = "2022-08-01"
 
         self.df = DataAccess.hämta_data(start_datum)
         self.df_rullande_4 = DataAccess.skapa_rullande_medel(start_datum, DataAccess.hämta_data("2021-01-01"), 4)
@@ -155,8 +155,8 @@ class ModelChart:
     def ge_meddelande_om_dagar_kvar_till_valet():
         dagar = DataAccess.ge_dagar_kvar_till_valet()
         import datetime as dt
-        # get current time
-        current_time = dt.datetime.now()
+        # get current time in the swedish time zone
+        now = dt.datetime.now(dt.timezone(dt.timedelta(hours=2)))
         # get current hour as text
-        current_hour = current_time.strftime("%H")
-        return f"Dagar till valet: {dagar}. Data uppdatet kl {current_hour}."
+        current_hour = now.strftime("%H")
+        return f"Dagar till valet: {dagar}. Data uppdaterat kl {current_hour}."
