@@ -70,7 +70,7 @@ class ChartByBlockDateTimeSeries(ChartByBlockBase):
         self.c = self.c.mark_circle(opacity=0.35, size=32)
     
     def add_transform_aggregate(self):
-        self.c = self.c.transform_aggregate(medel_stöd="mean(stöd)", groupby=["Publiceringsdatum", "Parti"])
+        self.c = self.c.transform_aggregate(medel_stöd="mean(stöd)", groupby=["Publiceringsdatum", "Parti", "Institut"])
 
 
     def add_encode(self):
@@ -78,7 +78,7 @@ class ChartByBlockDateTimeSeries(ChartByBlockBase):
         datum_uttryck = "Publiceringsdatum:T"
         self.c = self.c.encode(
             x=alt.X(datum_uttryck, title="Månad"),
-            y=alt.Y(y_uttryck, title="Procent", scale=alt.Scale(domain=(44, 54))),
+            y=alt.Y(y_uttryck, title="Procent", scale=alt.Scale(domain=(43, 55))),
             color = alt.Color(
                     "Block:O",
                      scale=alt.Scale(
@@ -87,11 +87,30 @@ class ChartByBlockDateTimeSeries(ChartByBlockBase):
                     ),
                     legend=alt.Legend(orient='top'),
                 ),
-            tooltip=[y_uttryck, "Block:O", datum_uttryck]
+            tooltip=[y_uttryck, "Block:O", "Institut", datum_uttryck],
         )
     
-class ChartByBlockDateTimeSeriesLine(ChartByBlockDateTimeSeries):
-
+class ChartByBlockDateTimeSeriesLine(ChartByBlockBase):
     def add_marker(self):
         self.c = self.c.mark_line(size=1.8, opacity=1)
+    
+    def add_transform_aggregate(self):
+        self.c = self.c.transform_aggregate(medel_stöd="mean(stöd)", groupby=["Publiceringsdatum", "Parti"])
 
+
+    def add_encode(self):
+        y_uttryck = "sum(medel_stöd):Q"
+        datum_uttryck = "Publiceringsdatum:T"
+        self.c = self.c.encode(
+            x=alt.X(datum_uttryck, title="Månad"),
+            y=alt.Y(y_uttryck, title="Procent", scale=alt.Scale(domain=(43, 55))),
+            color = alt.Color(
+                    "Block:O",
+                     scale=alt.Scale(
+                        domain=Grunddata.blocknamn,
+                        range=["#FF8080", "#80C0FF"],
+                    ),
+                    legend=alt.Legend(orient='top'),
+                ),
+            tooltip=[y_uttryck, "Block:O", datum_uttryck],
+        )

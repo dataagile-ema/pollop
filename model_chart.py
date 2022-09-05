@@ -100,7 +100,8 @@ class ModelChart:
         return exp
 
     def visa_block_som_stacked_bar_senaste_4_undesökningar(self, spärr: bool):
-        subtitel = ["Medel fyra senaste undersökningarna"]
+        subtitel = ["Medel fyra senaste undersökningsdagarna"]
+        df_data = self.df.groupby('Publiceringsdatum').mean()
         df_data = self.df.tail(4)
         exp = self.__visa_block_som_stacked_bar(subtitel, df_data, spärr)
         return exp
@@ -141,7 +142,7 @@ class ModelChart:
         c3 = chart_obj3.get_chart()
 
 
-        exp = chart_obj1.assemple_charts((c2+c1+c3), labelfont_size=14)
+        exp = chart_obj1.assemple_charts((c1+c3+c2), labelfont_size=14)
         return exp
 
     def hämta_df_senaste_undersökningar(self):

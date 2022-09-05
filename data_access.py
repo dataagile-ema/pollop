@@ -82,10 +82,15 @@ class DataAccess:
     @staticmethod 
     def skapa_rullande_medel(start_datum: datetime.date, data: pd.DataFrame, w: int):
         df_rol = data.copy(deep=True)
-        df_rol = df_rol.set_index('Publiceringsdatum')
 
-        df_rol = df_rol.rolling(window=w).mean().slice_shift(-w+2)  
+        df_rol = df_rol.groupby('Publiceringsdatum').mean()
 
+        # no of rows in df_rol
+        n = df_rol.shape[0]
+        # no of rows as even multiple of w
+        n_even_w = n - n % w
+
+        df_rol = df_rol.tail(n_even_w).rolling(window=w, min_periods=4).mean()
 
         df_rol.reset_index(inplace=True)
         df_rol = df_rol[df_rol["Publiceringsdatum"] > start_datum]
