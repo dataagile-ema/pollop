@@ -142,7 +142,7 @@ class ModelChart:
         c3 = chart_obj3.get_chart()
 
 
-        exp = chart_obj1.assemple_charts((c1+c3+c2), labelfont_size=14)
+        exp = chart_obj1.assemple_charts((c2+c3+c1), labelfont_size=14)
         return exp
 
     def hämta_df_senaste_undersökningar(self):
