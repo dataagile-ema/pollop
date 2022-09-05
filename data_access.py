@@ -83,11 +83,10 @@ class DataAccess:
     def skapa_rullande_medel(start_datum: datetime.date, data: pd.DataFrame, w: int):
         df_rol = data.copy(deep=True)
         df_rol = df_rol.set_index('Publiceringsdatum')
-        df_rol = df_rol.rolling(window=w).mean()
-        # shift df_rol if last value is NaN
-        if df_rol.iloc[-1].isnull().values.any():
-            df_rol = df_rol.shift(1)
-        df_rol = df_rol.shift(-1)
+
+        df_rol = df_rol.rolling(window=w).mean().slice_shift(-w+2)  
+
+
         df_rol.reset_index(inplace=True)
         df_rol = df_rol[df_rol["Publiceringsdatum"] > start_datum]
         return df_rol
