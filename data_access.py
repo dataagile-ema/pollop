@@ -90,7 +90,7 @@ class DataAccess:
         # no of rows as even multiple of w
         n_even_w = n - n % w
 
-        df_rol = df_rol.tail(n_even_w).rolling(window=w, min_periods=4).mean()
+        df_rol = df_rol.tail(n_even_w).rolling(window=w, min_periods=w).mean()
 
         df_rol.reset_index(inplace=True)
         df_rol = df_rol[df_rol["Publiceringsdatum"] > start_datum]

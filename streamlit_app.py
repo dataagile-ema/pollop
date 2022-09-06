@@ -73,7 +73,7 @@ with right:
 if __vilket_val() == 0:
     spärr = st.checkbox("Ta bort partier under spärr", False)
     chart_u1 = modell.visa_linje_för_block(spärr)
-    chart_u2 = modell.visa_block_som_stacked_bar_senaste_4_undesökningar(spärr)
+    chart_u2 = modell.visa_block_som_stacked_bar_senaste_n_undesökningsdagar(spärr, Grunddata.antal_undersökningsdagar_n)
 elif __vilket_val() == 1:
     chart_u1 = modell.visa_spridningsdiagram_små_partier()
     chart_u2 = modell.visa_linje_små_partier()

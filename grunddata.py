@@ -36,6 +36,8 @@ class Grunddata:
 
     valdag = "2022-09-11"
 
+    antal_undersökningsdagar_n = 2
+
 
 
 

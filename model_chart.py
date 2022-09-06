@@ -1,3 +1,4 @@
+from re import sub
 from data_access import DataAccess
 from urval import UrvalsLista
 from chart_by_block import ChartByBlockBar, ChartByBlockDateTimeSeries, ChartByBlockDateTimeSeries, ChartByBlockDateTimeSeriesLine
@@ -20,7 +21,7 @@ class ModelChart:
         start_datum = "2022-08-01"
 
         self.df = DataAccess.hämta_data(start_datum)
-        self.df_rullande_4 = DataAccess.skapa_rullande_medel(start_datum, DataAccess.hämta_data("2021-01-01"), 4)
+        self.df_rullande_4 = DataAccess.skapa_rullande_medel(start_datum, DataAccess.hämta_data("2021-01-01"), Grunddata.antal_undersökningsdagar_n)
         self.df_sista_30_dagar = DataAccess.ge_data_for_sista_30_dagarna(self.df)
         self.df_uppslag_block = DataAccess.hämta_df_för_uppslag_block()
         self.__sätt_urval()
@@ -36,7 +37,7 @@ class ModelChart:
 
     def visa_linje_små_partier(self):
         titel = "Partier nära spärren"
-        subtitel = ["Medel för kalendermånad innverande år"]
+        subtitel = ["Medel för kalendermånad"]
 
         chart_obj1 = ChartByPartyMonthMeanTimeSeries(self.df, title=titel, subtitle=subtitel, urval=self.uv_små_partier)
         c1 = chart_obj1.get_chart()
@@ -50,7 +51,7 @@ class ModelChart:
 
     def visa_spridningsdiagram_små_partier(self):
         titel = "Partier nära spärren"
-        subtitel = ["Alla opinionsundersökningar"]
+        subtitel = [f"Linje rullande medel för senaste {Grunddata.antal_undersökningsdagar_n} publiceringsdagarna"]
 
         chart_obj1 = Chart4PercentLineRule()
         c1 = chart_obj1.get_chart()
@@ -66,7 +67,7 @@ class ModelChart:
 
     def visa_spridningsdiagram_partier_högeropposition(self):
         titel = "Högeropposition"
-        subtitel = ["Alla opinionsundersökningar"]
+        subtitel = [f"Linje rullande medel för senaste {Grunddata.antal_undersökningsdagar_n} publiceringsdagarna"]
 
         chart_obj1 = ChartByPartyDateTimeSeriesLine(data=self.df_rullande_4, title=titel, subtitle=subtitel, urval=self.uv_högeropposition)
         c1 = chart_obj1.get_chart()
@@ -79,7 +80,7 @@ class ModelChart:
 
     def visa_spridningsdiagram_partier_regering_stöd(self):
         titel = "Regering + stöd"
-        subtitel = ["Alla opinionsundersökningar"]
+        subtitel = [f"Linje rullande medel för senaste {Grunddata.antal_undersökningsdagar_n} publiceringsdagarna"]
 
         chart_obj1 = ChartByPartyDateTimeSeriesLine(data=self.df_rullande_4, title=titel, subtitle=subtitel, urval=self.uv_regering_stöd)
         c1 = chart_obj1.get_chart()
@@ -99,10 +100,11 @@ class ModelChart:
         exp = self.__visa_block_som_stacked_bar(subtitel, df_data)
         return exp
 
-    def visa_block_som_stacked_bar_senaste_4_undesökningar(self, spärr: bool):
-        subtitel = ["Medel fyra senaste undersökningsdagarna"]
+    def visa_block_som_stacked_bar_senaste_n_undesökningsdagar(self, spärr: bool, n: int):
+        subtitel = [f"Medel för de senaste {n} publiceringsdagarna"]
         df_data = self.df.groupby('Publiceringsdatum').mean()
-        df_data = self.df.tail(4)
+        
+        df_data = df_data.tail(n)
         exp = self.__visa_block_som_stacked_bar(subtitel, df_data, spärr)
         return exp
 
@@ -130,8 +132,7 @@ class ModelChart:
     
     def visa_linje_för_block(self, spärr: bool):
         titel = "Opinionsdata för block"
-        subtitel = ["Undersökning per datum"]
-
+        subtitel = [f"Linje rullande medel för senaste {Grunddata.antal_undersökningsdagar_n} publiceringsdagarna"]
         chart_obj1 = ChartByBlockDateTimeSeries(title=titel, subtitle=subtitel, data=self.df, urval=self.uv_alla_partier, lookup_block=self.df_uppslag_block, spärr=spärr)
         c1 = chart_obj1.get_chart()
 
