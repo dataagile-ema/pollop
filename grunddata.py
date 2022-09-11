@@ -36,7 +36,10 @@ class Grunddata:
 
     valdag = "2022-09-11"
 
-    antal_undersökningsdagar_n = 2
+    antal_undersökningsdagar_n_rullande = 2
+
+    antal_undersökningsdagar_n_stacked = 14
+
 
 
 

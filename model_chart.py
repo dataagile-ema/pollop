@@ -21,7 +21,7 @@ class ModelChart:
         start_datum = "2022-08-01"
 
         self.df = DataAccess.hämta_data(start_datum)
-        self.df_rullande_4 = DataAccess.skapa_rullande_medel(start_datum, DataAccess.hämta_data("2021-01-01"), Grunddata.antal_undersökningsdagar_n)
+        self.df_rullande_n = DataAccess.skapa_rullande_medel(start_datum, DataAccess.hämta_data("2021-01-01"), Grunddata.antal_undersökningsdagar_n_rullande)
         self.df_sista_30_dagar = DataAccess.ge_data_for_sista_30_dagarna(self.df)
         self.df_uppslag_block = DataAccess.hämta_df_för_uppslag_block()
         self.__sätt_urval()
@@ -51,12 +51,12 @@ class ModelChart:
 
     def visa_spridningsdiagram_små_partier(self):
         titel = "Partier nära spärren"
-        subtitel = [f"Linje rullande medel för senaste {Grunddata.antal_undersökningsdagar_n} publiceringsdagarna"]
+        subtitel = [f"Rullande medel för {Grunddata.antal_undersökningsdagar_n_rullande} publiceringsdagar"]
 
         chart_obj1 = Chart4PercentLineRule()
         c1 = chart_obj1.get_chart()
 
-        chart_obj2 = ChartByPartyDateTimeSeriesLine(data=self.df_rullande_4, title=titel, subtitle=subtitel, urval=self.uv_små_partier)
+        chart_obj2 = ChartByPartyDateTimeSeriesLine(data=self.df_rullande_n, title=titel, subtitle=subtitel, urval=self.uv_små_partier)
         c2 = chart_obj2.get_chart()
 
         chart_obj3 = ChartByPartyDateTimeSeries(data=self.df, title=titel, subtitle=subtitel, urval=self.uv_små_partier)
@@ -67,9 +67,9 @@ class ModelChart:
 
     def visa_spridningsdiagram_partier_högeropposition(self):
         titel = "Högeropposition"
-        subtitel = [f"Linje rullande medel för senaste {Grunddata.antal_undersökningsdagar_n} publiceringsdagarna"]
+        subtitel = [f"Rullande medel för {Grunddata.antal_undersökningsdagar_n_rullande} publiceringsdagar"]
 
-        chart_obj1 = ChartByPartyDateTimeSeriesLine(data=self.df_rullande_4, title=titel, subtitle=subtitel, urval=self.uv_högeropposition)
+        chart_obj1 = ChartByPartyDateTimeSeriesLine(data=self.df_rullande_n, title=titel, subtitle=subtitel, urval=self.uv_högeropposition)
         c1 = chart_obj1.get_chart()
 
         chart_obj2 = ChartByPartyDateTimeSeries(data=self.df, title=titel, subtitle=subtitel, urval=self.uv_högeropposition)
@@ -80,9 +80,9 @@ class ModelChart:
 
     def visa_spridningsdiagram_partier_regering_stöd(self):
         titel = "Regering + stöd"
-        subtitel = [f"Linje rullande medel för senaste {Grunddata.antal_undersökningsdagar_n} publiceringsdagarna"]
+        subtitel = [f"Rullande medel för {Grunddata.antal_undersökningsdagar_n_rullande} publiceringsdagar"]        
 
-        chart_obj1 = ChartByPartyDateTimeSeriesLine(data=self.df_rullande_4, title=titel, subtitle=subtitel, urval=self.uv_regering_stöd)
+        chart_obj1 = ChartByPartyDateTimeSeriesLine(data=self.df_rullande_n, title=titel, subtitle=subtitel, urval=self.uv_regering_stöd)
         c1 = chart_obj1.get_chart()
 
         chart_obj2 = ChartByPartyDateTimeSeries(data=self.df, title=titel, subtitle=subtitel, urval=self.uv_regering_stöd)
@@ -132,11 +132,11 @@ class ModelChart:
     
     def visa_linje_för_block(self, spärr: bool):
         titel = "Opinionsdata för block"
-        subtitel = [f"Linje rullande medel för senaste {Grunddata.antal_undersökningsdagar_n} publiceringsdagarna"]
+        subtitel = [f"Rullande medel för {Grunddata.antal_undersökningsdagar_n_rullande} publiceringsdagar"]        
         chart_obj1 = ChartByBlockDateTimeSeries(title=titel, subtitle=subtitel, data=self.df, urval=self.uv_alla_partier, lookup_block=self.df_uppslag_block, spärr=spärr)
         c1 = chart_obj1.get_chart()
 
-        chart_obj2 = ChartByBlockDateTimeSeriesLine(title=titel, subtitle=subtitel, data=self.df_rullande_4, urval=self.uv_alla_partier, lookup_block=self.df_uppslag_block, spärr=spärr)
+        chart_obj2 = ChartByBlockDateTimeSeriesLine(title=titel, subtitle=subtitel, data=self.df_rullande_n, urval=self.uv_alla_partier, lookup_block=self.df_uppslag_block, spärr=spärr)
         c2 = chart_obj2.get_chart()
 
         chart_obj3 = ChartElectionDayRule()
