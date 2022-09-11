@@ -139,11 +139,13 @@ class ModelChart:
         chart_obj2 = ChartByBlockDateTimeSeriesLine(title=titel, subtitle=subtitel, data=self.df_rullande_n, urval=self.uv_alla_partier, lookup_block=self.df_uppslag_block, spärr=spärr)
         c2 = chart_obj2.get_chart()
 
-        chart_obj3 = ChartElectionDayRule()
-        c3 = chart_obj3.get_chart()
+        if (DataAccess.ge_dagar_kvar_till_valet() < 20):
+            chart_obj3 = ChartElectionDayRule()
+            c3 = chart_obj3.get_chart()
+            exp = chart_obj1.assemple_charts((c2+c3+c1), labelfont_size=14)
+        else:
+            exp = chart_obj1.assemple_charts((c2+c1), labelfont_size=14)
 
-
-        exp = chart_obj1.assemple_charts((c2+c3+c1), labelfont_size=14)
         return exp
 
     def hämta_df_senaste_undersökningar(self):

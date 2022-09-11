@@ -34,7 +34,7 @@ class Grunddata:
     gräns_småparti = 6
     riksdagsspärr = 4.0
 
-    valdag = "2022-09-11"
+    valdag = "2026-09-13"
 
     antal_undersökningsdagar_n_rullande = 2
 
