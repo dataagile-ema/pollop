@@ -7,6 +7,7 @@ from chart_by_party import ChartByPartyDateTimeSeries, ChartByPartyDateTimeSerie
 from chart_by_party import ChartByPartyMonthMeanTimeSeries
 from charts_additions import Chart4PercentLineRule, ChartElectionDayRule
 import pandas as pd
+from datetime import datetime, timedelta
 from urval import Urval
 from grunddata import Grunddata
 from grunddata import BLOCK_INDEX_REGERING
@@ -18,7 +19,8 @@ class ModelChart:
     def __init__(self, dagar_kar_text: str) -> None:
         self.dagar_kvar_text = dagar_kar_text
 
-        start_datum = "2022-08-01"
+         # calc date 8 months ago
+        start_datum = (datetime.now() - timedelta(days=240)).strftime("%Y-%m-%d")
 
         self.df = DataAccess.hämta_data(start_datum)
         self.df_rullande_n = DataAccess.skapa_rullande_medel(start_datum, DataAccess.hämta_data("2021-01-01"), Grunddata.antal_undersökningsdagar_n_rullande)
