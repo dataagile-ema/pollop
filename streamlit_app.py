@@ -58,7 +58,7 @@ with left:
     st.button(
         användar_val[0],
         on_click=__sätt_val_0,
-        help="Nuvarande regeringsunderlag jämfört med högeroppositionen",
+        help="Nuvarande regeringsunderlag jämfört med oppositionen",
     )
 
 with mid:
@@ -79,7 +79,7 @@ elif __vilket_val() == 1:
     chart_u2 = modell.visa_linje_små_partier()
 else:
     chart_u1 = modell.visa_spridningsdiagram_partier_regering_stöd()
-    chart_u2 = modell.visa_spridningsdiagram_partier_högeropposition()
+    chart_u2 = modell.visa_spridningsdiagram_partier_opposition()
 
 
 st.altair_chart(chart_u1, use_container_width=True)

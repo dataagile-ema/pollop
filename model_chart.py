@@ -11,7 +11,7 @@ from datetime import datetime, timedelta
 from urval import Urval
 from grunddata import Grunddata
 from grunddata import BLOCK_INDEX_REGERING
-from grunddata import BLOCK_INDEX_HÖGER_OP
+from grunddata import BLOCK_INDEX_OP
 
 
 
@@ -34,7 +34,7 @@ class ModelChart:
         )
 
         self.uv_alla_partier = Urval.hämta_urval_alla_partier()
-        self.uv_högeropposition = Urval.hämta_urval_för_block(Grunddata.blocknamn[BLOCK_INDEX_HÖGER_OP])
+        self.uv_opposition = Urval.hämta_urval_för_block(Grunddata.blocknamn[BLOCK_INDEX_OP])
         self.uv_regering_stöd = Urval.hämta_urval_för_block(Grunddata.blocknamn[BLOCK_INDEX_REGERING])
 
     def visa_linje_små_partier(self):
@@ -67,21 +67,21 @@ class ModelChart:
         exp = chart_obj3.assemple_charts((c1+c2+c3), 14)
         return exp
 
-    def visa_spridningsdiagram_partier_högeropposition(self):
-        titel = "Högeropposition"
+    def visa_spridningsdiagram_partier_opposition(self):
+        titel = Grunddata.blocknamn[BLOCK_INDEX_OP]
         subtitel = [f"Rullande medel för {Grunddata.antal_undersökningsdagar_n_rullande} publiceringsdagar"]
 
-        chart_obj1 = ChartByPartyDateTimeSeriesLine(data=self.df_rullande_n, title=titel, subtitle=subtitel, urval=self.uv_högeropposition)
+        chart_obj1 = ChartByPartyDateTimeSeriesLine(data=self.df_rullande_n, title=titel, subtitle=subtitel, urval=self.uv_opposition)
         c1 = chart_obj1.get_chart()
 
-        chart_obj2 = ChartByPartyDateTimeSeries(data=self.df, title=titel, subtitle=subtitel, urval=self.uv_högeropposition)
+        chart_obj2 = ChartByPartyDateTimeSeries(data=self.df, title=titel, subtitle=subtitel, urval=self.uv_opposition)
         c2 = chart_obj2.get_chart()
 
         exp = chart_obj1.assemple_charts((c1+c2), 14)
         return exp
 
     def visa_spridningsdiagram_partier_regering_stöd(self):
-        titel = "Regering + stöd"
+        titel = Grunddata.blocknamn[BLOCK_INDEX_REGERING]
         subtitel = [f"Rullande medel för {Grunddata.antal_undersökningsdagar_n_rullande} publiceringsdagar"]        
 
         chart_obj1 = ChartByPartyDateTimeSeriesLine(data=self.df_rullande_n, title=titel, subtitle=subtitel, urval=self.uv_regering_stöd)

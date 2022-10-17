@@ -34,7 +34,7 @@ class Urval:
 
     @staticmethod
     def hämta_urval_för_block(block_namn: str):
-        # index for all högeropposition in block
+        # index for all opposition in block
         index_partier_för_block = [i for i, x in enumerate(Grunddata.block_för_parti) if x == block_namn]
         # list of partier in index
         partier = [Grunddata.partier[i] for i in index_partier_för_block]

@@ -2,23 +2,23 @@
 
 
 BLOCK_INDEX_REGERING = 0
-BLOCK_INDEX_HÖGER_OP = 1
+BLOCK_INDEX_OP = 1
 class Grunddata:
     blocknamn = ["",""]
     blocknamn[BLOCK_INDEX_REGERING] = "Regering + stöd"
-    blocknamn[BLOCK_INDEX_HÖGER_OP] = "Högeropposition"
+    blocknamn[BLOCK_INDEX_OP] = "Opposition"
 
     partier = ["V", "S", "MP", "C", "L", "M", "KD", "SD"]
 
     block_för_parti = [
+        blocknamn[BLOCK_INDEX_OP],
+        blocknamn[BLOCK_INDEX_OP],
+        blocknamn[BLOCK_INDEX_OP],
+        blocknamn[BLOCK_INDEX_OP],
         blocknamn[BLOCK_INDEX_REGERING],
         blocknamn[BLOCK_INDEX_REGERING],
         blocknamn[BLOCK_INDEX_REGERING],
-        blocknamn[BLOCK_INDEX_REGERING],
-        blocknamn[BLOCK_INDEX_HÖGER_OP],
-        blocknamn[BLOCK_INDEX_HÖGER_OP],
-        blocknamn[BLOCK_INDEX_HÖGER_OP],
-        blocknamn[BLOCK_INDEX_HÖGER_OP]]
+        blocknamn[BLOCK_INDEX_REGERING]]
         
     färg_för_parti = [
         "#B00000",
